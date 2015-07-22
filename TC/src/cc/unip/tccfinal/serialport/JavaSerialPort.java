@@ -124,6 +124,7 @@ public class JavaSerialPort implements SerialPortEventListener {
 
     public void pararLeitura() {
         System.out.println(">>Interrompendo leitura da porta " + portaCom);
+        
         try {
             port.removeEventListener();
         } catch (Exception e) {
@@ -144,7 +145,6 @@ public class JavaSerialPort implements SerialPortEventListener {
             }
         } catch (Exception e) {
             System.out.println(e);
-            e.printStackTrace();
         }
 
     }

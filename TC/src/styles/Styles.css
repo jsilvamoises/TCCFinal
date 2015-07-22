@@ -1,3 +1,44 @@
 .button {
     -fx-font-weight: bold;
+    -fx-fill: crimson;
+}
+.btn-top{
+    -fx-text-fill: cadetblue;    
+    -fx-background-color:white;    
+    -fx-opacity:0.70;
+    -fx-border-color: white;
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+   
+    
+}
+.btn-top:hover{
+     -fx-background-color: slategrey;
+     -fx-border-color: red;
+     -fx-border-radius: 50;
+     -fx-background-radius: 50;
+}
+.toolbar{
+    -fx-background-color: black;
+    -fx-opacity:0.70;
+}
+.background-app{
+    -fx-background-color:black;
+    /*-fx-background-image: url(../resources/images/background/black-background.jpg);*/
+    -fx-opacity:0.70;
+}
+.box-esquerdo{
+    -fx-start-margin: 10;
+    -fx-padding: 10;
+}
+
+.box-esquerdo:hover{
+    -fx-background-color:#003333;
+}
+.lbl-info{
+    //-fx-background-color: white;
+    -fx-text-fill: brown;
+    -fx-text-alignment: center;
+    -fx-label-padding: 2;
+    -fx-font: "Arial, regular, 14";
 }

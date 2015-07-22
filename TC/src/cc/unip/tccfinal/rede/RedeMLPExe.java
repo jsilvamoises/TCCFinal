@@ -28,11 +28,7 @@ public class RedeMLPExe {
    }
        
 
-//	private static double[][] CONJUNTO_TREINAMENTO = {
-//		{0.0, 0.0, 1.0, 1.0},
-//		{0.0, 1.0, 0.0, 1.0},
-//		{1.0, 1.0, 1.0, 1.0} // bias
-//	};
+
 
 	/*private static double[][] CONJUNTO_TREINAMENTO = {
 		{0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0},
@@ -44,6 +40,11 @@ public class RedeMLPExe {
 	};*/
 
 //	private static double[] VALORES_ESPERADOS = {0.0, 1.0, 1.0, 0.0};
+   //	private static double[][] CONJUNTO_TREINAMENTO = {
+//		{0.0, 0.0, 1.0, 1.0},
+//		{0.0, 1.0, 0.0, 1.0},
+//		{1.0, 1.0, 1.0, 1.0} // bias
+//	};
 
 	//private static double[] VALORES_ESPERADOS = {1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0};
 

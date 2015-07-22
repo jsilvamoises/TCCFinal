@@ -16,37 +16,103 @@ public class Sensor {
     private double temperatura;
     private double umidade;
     private double luminosidade;
+    //private StatusEquipamento statusEquipamentos;
+    private byte statusIluminacao;
+    private byte statusAquecedor;
+    private byte statusArcondicionado;
+    private byte statusUmidificador;
+    private byte statusGeral;
+    
+    
 
     public Date getHoraAmostra() {
         return horaAmostra;
     }
 
-    public void setHoraAmostra(Date horaAmostra) {
+    public Sensor setHoraAmostra(Date horaAmostra) {
         this.horaAmostra = horaAmostra;
+        return this;
     }
 
     public double getTemperatura() {
         return temperatura;
     }
 
-    public void setTemperatura(double temperatura) {
+    public Sensor setTemperatura(double temperatura) {
         this.temperatura = temperatura;
+        return this;
     }
 
     public double getUmidade() {
         return umidade;
     }
 
-    public void setUmidade(double umidade) {
+    public Sensor setUmidade(double umidade) {
         this.umidade = umidade;
+        return this;
     }
 
     public double getLuminosidade() {
         return luminosidade;
     }
 
-    public void setLuminosidade(double luminosidade) {
+    public Sensor setLuminosidade(double luminosidade) {
         this.luminosidade = luminosidade;
+        return this;
+    }
+
+//    public StatusEquipamento getStatusEquipamentos() {
+//        return statusEquipamentos;
+//    }
+//
+//    public Sensor setStatusEquipamentos(StatusEquipamento statusEquipamentos) {
+//        this.statusEquipamentos = statusEquipamentos;
+//        return this;
+//    }
+
+    public byte getStatusIluminacao() {
+        return statusIluminacao;
+    }
+
+    public Sensor setStatusIluminacao(byte statusIluminacao) {
+        this.statusIluminacao = statusIluminacao;
+        return this;
+    }
+
+    public byte getStatusAquecedor() {
+        return statusAquecedor;
+    }
+
+    public Sensor setStatusAquecedor(byte statusAquecedor) {
+        this.statusAquecedor = statusAquecedor;
+        return this;
+    }
+
+    public byte getStatusArcondicionado() {
+        return statusArcondicionado;
+    }
+
+    public Sensor setStatusArcondicionado(byte statusArcondicionado) {
+        this.statusArcondicionado = statusArcondicionado;
+        return this;
+    }
+
+    public byte getStatusUmidificador() {
+        return statusUmidificador;
+    }
+
+    public Sensor setStatusUmidificador(byte statusUmidificador) {
+        this.statusUmidificador = statusUmidificador;
+        return this;
+    }
+
+    public byte getStatusGeral() {
+        return statusGeral;
+    }
+
+    public Sensor setStatusGeral(byte statusGeral) {
+        this.statusGeral = statusGeral;
+        return this;
     }
     
     

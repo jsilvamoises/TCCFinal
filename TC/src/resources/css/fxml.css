@@ -1,0 +1,19 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08/07/2015, 21:25:15
+    Author     : MOISES
+*/
+
+.menu{
+    -fx-background-image: url(../images/banner/banner.jpg);
+}
+.automatico{
+    -fx-background-color: mediumaquamarine;
+}
+.manual{
+    -fx-background-color: white;
+}

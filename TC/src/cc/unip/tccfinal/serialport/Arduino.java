@@ -67,8 +67,9 @@ public class Arduino {
         }
 
     }
+    
 
-    public void lerPorta() {
+    public void lerPorta() {        
         javaSerialPort.iniciarLeitura();
     }
 
