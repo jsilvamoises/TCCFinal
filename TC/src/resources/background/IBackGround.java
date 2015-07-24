@@ -25,4 +25,5 @@ public class IBackGround {
     public static final Background  BACKGROUND_TRANSPARENT = new Background(new BackgroundFill(Color.TRANSPARENT, CORNER_10, Insets.EMPTY));
     public static final Background  BACKGROUND_FIREBRICK = new Background(new BackgroundFill(Color.FIREBRICK, CORNER_10, Insets.EMPTY));
     public static final Background  BACKGROUND_MENU = new Background(new BackgroundFill(Color.DARKCYAN, CORNER_10, Insets.EMPTY));
+    public static final Background  BACKGROUND_BLACK = new Background(new BackgroundFill(Color.BLACK, CORNER_10, Insets.EMPTY));
 }

@@ -6,7 +6,7 @@
 package cc.unip.tccfinal.util;
 
 import cc.unip.tccfinal.controller.EquipamentoController;
-import cc.unip.tccfinal.controller.IdEquipamento;
+import cc.unip.tccfinal.model.IdEquipamento;
 import cc.unip.tccfinal.model.Equipamento;
 import cc.unip.tccfinal.model.EquipamentoId;
 import cc.unip.tccfinal.model.Sensor;

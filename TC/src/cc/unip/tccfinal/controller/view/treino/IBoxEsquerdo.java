@@ -8,7 +8,9 @@ package cc.unip.tccfinal.controller.view.treino;
 import cc.unip.tccfinal.rede.InterfaceTreinoRede;
 import cc.unip.tccfinal.util.Icon32;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
@@ -25,18 +27,25 @@ import javafx.scene.text.Text;
  */
 public class IBoxEsquerdo {
 
-    InterfaceTreinoRede interfaceTreino;
-
+    InterfaceTreinoRede iTreino;
+    private Treino treino;
     private VBox boxEsquerdo;
     private Label lblPorcentagemAmostra, lblNrNeuronioEntrada, lblNrNeuronioSegCamada, lblFatorAdptacao, lblErroMinimo, lblNumMaxEpoca;
     private Slider sliderPorcentagemAmostra, sliderNrNeuronioEntrada, sliderNrNeuroniosPrimeiraCamada, slederFatorAdaptacao, sliderErroMinimo, sliderNumMaxEpoca;
-    int valorScrollEntrada, valorScrollPrimeiraCamada, valorPorcentagemAmostra;
+    int valorScrollEntrada, valorScrollPrimeiraCamada;
+    private int valorPorcentagemAmostra;
     private double fatorAdptacao, erroMinimo;
     int numeroMaximoEpocas;
     Text textoInfo;
+    Button btnRestaurarDefault;
 
-    public VBox build() {
-        interfaceTreino = InterfaceTreinoRede.getInstance();
+    public IBoxEsquerdo(InterfaceTreinoRede iTreino, Treino treino) {
+        this.iTreino = iTreino;
+        this.treino = treino;
+    }
+
+    public IBoxEsquerdo build() {
+
         boxEsquerdo = new VBox();
         boxEsquerdo.setPrefWidth(300);
         boxEsquerdo.setPadding(new Insets(10));
@@ -51,11 +60,16 @@ public class IBoxEsquerdo {
         lblFatorAdptacao = new Label("Fator de Adaptacao", new ImageView(new Image(Icon32.getInstance().ICON_ADD_DATABASE())));
         lblErroMinimo = new Label("Erro Minimo", new ImageView(new Image(Icon32.getInstance().ICON_ADD_DATABASE())));
         lblNumMaxEpoca = new Label("Máximo de Épocas", new ImageView(new Image(Icon32.getInstance().ICON_ADD_DATABASE())));
-        
+
+        btnRestaurarDefault = new Button("Default");
+        btnRestaurarDefault.setOnAction((ActionEvent event) -> {
+            restaurarValorDefault();
+        });
+
         sliderNrNeuronioEntrada = new Slider(3, 10, 3);
         sliderNrNeuronioEntrada.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             valorScrollEntrada = newValue.intValue();
-            interfaceTreino.setNrNeuroniosEntrada(valorScrollEntrada);
+
             updateLabelInfo("Qt Neuro. Entrada:: ", valorScrollEntrada);
             //System.out.println(valorScrollEntrada);
         });
@@ -63,7 +77,7 @@ public class IBoxEsquerdo {
         sliderNrNeuroniosPrimeiraCamada = new Slider(3, 10, 3);
         sliderNrNeuroniosPrimeiraCamada.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             valorScrollPrimeiraCamada = newValue.intValue();
-            interfaceTreino.setNrNeuroniosPrimeiraCamada(valorScrollPrimeiraCamada);
+
             updateLabelInfo("Qt Neuro. Camada 1:: ", valorScrollPrimeiraCamada);
             //System.out.println(valorScrollSegCamada);
         });
@@ -71,7 +85,7 @@ public class IBoxEsquerdo {
         sliderPorcentagemAmostra = new Slider(1, 100, 30);
         sliderPorcentagemAmostra.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             valorPorcentagemAmostra = newValue.intValue();
-            interfaceTreino.setPorcentagemTreinamento(valorPorcentagemAmostra);
+
             updateLabelInfo("Porcentagem para Treino:: ", valorPorcentagemAmostra);
             //System.out.println(valorPorcentagemAmostra);
         });
@@ -79,7 +93,7 @@ public class IBoxEsquerdo {
         slederFatorAdaptacao = new Slider(0.30, 1.0, 0.30);
         slederFatorAdaptacao.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             fatorAdptacao = newValue.doubleValue();
-            interfaceTreino.setFatorAdaptacao(fatorAdptacao);
+
             updateLabelInfo("Fator Adaptacao:: ", fatorAdptacao);
             //System.out.println(fatorAdptacao);
         });
@@ -87,15 +101,15 @@ public class IBoxEsquerdo {
         sliderErroMinimo = new Slider(0.03, 1.0, 0.03);
         sliderErroMinimo.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             erroMinimo = newValue.doubleValue();
-            interfaceTreino.setErroMinimo(erroMinimo);
+            atualizarValoresParaAnalise();
             updateLabelInfo("Erro Mínimo:: ", erroMinimo);
             //System.out.println(erroMinimo);
         });
 
-        sliderNumMaxEpoca = new Slider(1, 10000000, 10000000);
+        sliderNumMaxEpoca = new Slider(1, 100000, 10000000);
         sliderNumMaxEpoca.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             numeroMaximoEpocas = newValue.intValue();
-            interfaceTreino.setNumeroMaximoEpocas(numeroMaximoEpocas);
+            atualizarValoresParaAnalise();
             sliderNumMaxEpoca.tooltipProperty().setValue(new Tooltip("" + numeroMaximoEpocas));
             updateLabelInfo("Max Épocas:: ", numeroMaximoEpocas);
             //System.out.println(numeroMaximoEpocas);
@@ -108,15 +122,52 @@ public class IBoxEsquerdo {
                 lblErroMinimo, sliderErroMinimo,
                 lblFatorAdptacao, slederFatorAdaptacao,
                 lblNumMaxEpoca, sliderNumMaxEpoca,
-                textoInfo
+                textoInfo, btnRestaurarDefault
         );
-        return boxEsquerdo;
+        restaurarValorDefault();
+        return this;
+    }
+
+    public void atualizarValoresParaAnalise() {
+        iTreino.setNumeroMaximoEpocas(numeroMaximoEpocas);
+        iTreino.setErroMinimo(erroMinimo);
+        iTreino.setFatorAdaptacao(fatorAdptacao);
+        iTreino.setPorcentagemTreinamento(valorPorcentagemAmostra);
+        iTreino.setNrNeuroniosEntrada(valorScrollEntrada);
+        iTreino.setNrNeuroniosPrimeiraCamada(valorScrollPrimeiraCamada);
     }
 
     private void updateLabelInfo(String msg, Number value) {
         String mensagem = msg.concat(String.valueOf(value));
         textoInfo.setText(mensagem.substring(0, mensagem.length() > 29 ? 29 : mensagem.length()));
 
+    }
+
+    private void restaurarValorDefault() {
+        fatorAdptacao = 0.30;
+        slederFatorAdaptacao.adjustValue(fatorAdptacao);
+        //iTreino.setFatorAdaptacao(fatorAdptacao);
+
+        numeroMaximoEpocas = 100000;
+        sliderNumMaxEpoca.adjustValue(numeroMaximoEpocas);
+       // iTreino.setNumeroMaximoEpocas(numeroMaximoEpocas);
+
+        erroMinimo = 0.01;
+        sliderErroMinimo.adjustValue(erroMinimo);
+       // iTreino.setErroMinimo(erroMinimo);
+
+        valorPorcentagemAmostra = 30;
+        sliderPorcentagemAmostra.adjustValue(valorPorcentagemAmostra);
+       // iTreino.setPorcentagemTreinamento(valorPorcentagemAmostra);
+
+        valorScrollEntrada = 3;
+        sliderNrNeuronioEntrada.adjustValue(valorScrollEntrada);
+       // iTreino.setNrNeuroniosEntrada(valorScrollEntrada);
+
+        valorScrollPrimeiraCamada = 3;
+        sliderNrNeuroniosPrimeiraCamada.adjustValue(valorScrollPrimeiraCamada);
+       // iTreino.setNrNeuroniosPrimeiraCamada(valorScrollPrimeiraCamada);
+        atualizarValoresParaAnalise();
     }
 
     private void configSlider(Slider... s) {
@@ -130,5 +181,19 @@ public class IBoxEsquerdo {
             sl.setBlockIncrement(sl.getMax() / 100);
         }
     }
+
+    public VBox getBoxEsquerdo() {
+        return boxEsquerdo;
+    }
+
+    public Slider getSliderPorcentagemAmostra() {
+        return sliderPorcentagemAmostra;
+    }
+
+    public Label getLblPorcentagemAmostra() {
+        return lblPorcentagemAmostra;
+    }
+
+    
 
 }

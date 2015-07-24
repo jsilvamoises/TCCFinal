@@ -69,6 +69,26 @@ public class EquipamentoController {
     }
     
     
+    public List<Double> listKeyEquipamento(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        Query query;
+        //List<Object[]> objetos = new ArrayList<>();
+        try {
+            query = session.createQuery("SELECT DISTINCT (E.id.idEquipamento) AS Chave FROM Equipamento E");
+            //System.out.println(query.list().size());
+            return query.list();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }finally{
+            session.getTransaction().commit();
+        }
+        
+    }
+    
+    
     public static void main(String[] args) {
         new EquipamentoController().listaParaTreinamento();
     }

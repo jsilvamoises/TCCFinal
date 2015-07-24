@@ -19,26 +19,30 @@ public class IToolbar {
 
     private Button btnTreinarRede, btnFechar;
     private ToolBar toolbar;
-    private InterfaceTreinoRede redeNeural;
-    public IToolbar() {
-        redeNeural = InterfaceTreinoRede.getInstance().setNrNeuroniosEntrada(3).setNrNeuroniosPrimeiraCamada(3).setPorcentagemTreinamento(50).prepararDados().build();
+    private InterfaceTreinoRede iTreino;
+    private Treino treino;
+    public IToolbar(InterfaceTreinoRede iTreino, Treino treino) {
+        this.treino = treino;
+        this.iTreino = iTreino;
         btnTreinarRede = new Button("Treinar");
         btnFechar = new Button("Fechar");
         toolbar = new ToolBar(btnTreinarRede, btnFechar);
         toolbar.getStyleClass().add("background-app");
     }
 
-    public ToolBar builder() {
+    public IToolbar builder() {
         init();
-        return toolbar;
+        return this;
     }
 
     private void init() {
         toolbar.setPrefHeight(70);
 
         btnTreinarRede.setContentDisplay(ContentDisplay.TOP);
-        btnTreinarRede.setOnAction((ActionEvent event) -> {
-            redeNeural.treinar();
+        btnTreinarRede.setOnAction((ActionEvent event) -> {  
+            treino.getBoxEsquerdo().atualizarValoresParaAnalise();
+           iTreino.treinar(); 
+            treino.getGraficos().gerarGrafico();
         });
 
         btnFechar.setContentDisplay(ContentDisplay.TOP);
@@ -54,5 +58,11 @@ public class IToolbar {
             b.setPrefSize(170, 60);
         }
     }
+
+    public ToolBar getToolbar() {
+        return toolbar;
+    }
+
+    
 
 }

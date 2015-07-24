@@ -10,6 +10,9 @@ import cc.unip.tccfinal.serialport.JavaSerialPort;
 import cc.unip.tccfinal.util.Icon32;
 import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -64,6 +67,14 @@ public class ToolbarArduino {
         btnSalvarAmostra.setContentDisplay(ContentDisplay.TOP);
         btnSalvarAmostra.getStyleClass().add("btn-top");
         btnSalvarAmostra.setOnAction((ActionEvent event)->{
+            if(estaSalvandoNoBanco){
+                estaMonitorandoPorta = false;
+                arduino.naoSalvarDadosNoBanco();
+            }else{
+               arduino.salvarDadosNoBanco();
+               estaSalvandoNoBanco = true;
+            }
+            
             System.out.println("Você clicou no botão Salvar Amostra");
         });
         
@@ -139,5 +150,19 @@ public class ToolbarArduino {
         }
 
     }
+    
+    
+    
+//        private void startUpdateGraficoThread() {
+//        TimerTask update = new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(() -> {
+//                    arduino.salvarDadosNoBanco();
+//                });
+//            }
+//        };
+//        new Timer().scheduleAtFixedRate(update, 0, 1000);
+//        }
     
 }

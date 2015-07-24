@@ -114,6 +114,11 @@ public class Sensor {
         this.statusGeral = statusGeral;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Sensor{" + "horaAmostra=" + horaAmostra + ", temperatura=" + temperatura + ", umidade=" + umidade + ", luminosidade=" + luminosidade + ", statusIluminacao=" + statusIluminacao + ", statusAquecedor=" + statusAquecedor + ", statusArcondicionado=" + statusArcondicionado + ", statusUmidificador=" + statusUmidificador + ", statusGeral=" + statusGeral + '}';
+    }
     
     
 }

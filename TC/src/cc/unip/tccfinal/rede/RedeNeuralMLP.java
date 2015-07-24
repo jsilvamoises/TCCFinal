@@ -1,6 +1,8 @@
 package cc.unip.tccfinal.rede;
 
 import java.util.Arrays;
+import javafx.scene.control.TextArea;
+import resources.background.IBackGround;
 
 public class RedeNeuralMLP {
 
@@ -14,19 +16,30 @@ public class RedeNeuralMLP {
     private double[] conexoesSegundaCamada;
     private int nrNeuroniosPrimeiraCamada;
     private int nrNeuroniosEntrada;
-   
+    private TextArea prompt = new TextArea();
+    
 
     public RedeNeuralMLP(int nrNeuroniosPrimeiraCamada, int nrNeuroniosEntrada) {
         this.nrNeuroniosPrimeiraCamada = nrNeuroniosPrimeiraCamada;
         this.nrNeuroniosEntrada = nrNeuroniosEntrada;
         this.inicializarConexoesSinapticasDaRede();
+        
+        this.prompt.setBackground(IBackGround.BACKGROUND_BLACK);
+        this.prompt.getStyleClass().add("prompt");
+    }
+    
+    public TextArea textAreaPromptView(){
+        return  this.prompt;
     }
 
     public void treinar(double[][] conjuntoTreinamento, double[] valoresEsperados) {
+        updatePrompt("Iniciando Treino.....");
+        
         double erro = 1.0;
-        System.out.println(erroMinimo);
+        //System.out.println(erroMinimo);
         while ((Math.abs(erro) > erroMinimo) && (epocas < numeroMaximoEpocas)) {
-            System.out.println(erro);
+            //System.out.println(erro);
+            
             for (int i = 0; i < conjuntoTreinamento[0].length; i++) {
                 double[] entradaSegundaCamada = propagarSinalPelaPrimeiraCamada(conjuntoTreinamento, i);
                 double valorSaida = propagarSinalPelaSegundaCamada(entradaSegundaCamada);
@@ -36,6 +49,8 @@ public class RedeNeuralMLP {
             }
             epocas++;
         }
+        updatePrompt("Treino concluído!!!");
+       
     }
 
     public int classificar(double[] entrada) {
@@ -43,7 +58,7 @@ public class RedeNeuralMLP {
         if (epocas > 9999999) {
             System.out.println("Nao foi possivel atingir um ponto de convergencia, verifique os parametros e a estrutura da rede.");
         } else {
-            System.out.printf("Treinamento realizado em %s epocas. \n", epocas);
+            // System.out.printf("Treinamento realizado em %s epocas. \n", epocas);
             double[] saidasPrimeiraCamada = getSaidaClassificacaoPrimeiraCamada(entrada);
             double[] entradaSegundaCamada = getEntradasSegundaCamada(saidasPrimeiraCamada);
             y = propagarSinalPelaSegundaCamada(entradaSegundaCamada);
@@ -187,8 +202,8 @@ public class RedeNeuralMLP {
         return fatorAdaptacao;
     }
 
-    public RedeNeuralMLP setFatorAdaptacao(double TAXA_APRENDIZADO) {
-        this.fatorAdaptacao = TAXA_APRENDIZADO;
+    public RedeNeuralMLP setFatorAdaptacao(double fatorAdaptacao) {
+        this.fatorAdaptacao = fatorAdaptacao;
         return this;
     }
 
@@ -196,8 +211,8 @@ public class RedeNeuralMLP {
         return erroMinimo;
     }
 
-    public RedeNeuralMLP setErroMinimo(double ERRO_MINIMO) {
-        this.erroMinimo = ERRO_MINIMO;
+    public RedeNeuralMLP setErroMinimo(double erroMinimo) {
+        this.erroMinimo = erroMinimo;
         return this;
     }
 
@@ -232,7 +247,9 @@ public class RedeNeuralMLP {
         return this;
     }
 
-    
+    private void updatePrompt(String msg){
+        prompt.appendText(msg.concat("\n"));
+    }
      
     
 

@@ -40,5 +40,9 @@
     -fx-text-fill: brown;
     -fx-text-alignment: center;
     -fx-label-padding: 2;
-    -fx-font: "Arial, regular, 14";
+    -fx-font: "14";
+}
+.prompt{
+    -fx-text-fill:red;
+    -fx-font:"14";
 }
