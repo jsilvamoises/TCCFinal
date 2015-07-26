@@ -10,18 +10,19 @@ package cc.unip.tccfinal.util;
  * @author MOISES
  */
 public class SystemInfo {
-    static int mb = 1024^2;
+    static int mb = 1024*1024;
+    private static Runtime instance = Runtime.getRuntime();
     public static Long getTotalMemory(){
-        return Runtime.getRuntime().totalMemory();
+        return instance.totalMemory();
     }
     public static Long getFreeMomory(){
-        return Runtime.getRuntime().freeMemory();
+        return instance.freeMemory();
     }
     public static Long getUsedMemory(){
        return getTotalMemory()-getFreeMomory();
     }
     public static long getMaxMemory(){
-        return Runtime.getRuntime().maxMemory();
+        return instance.maxMemory();
     }
     
     public static int getTotalMemoryInMB(){

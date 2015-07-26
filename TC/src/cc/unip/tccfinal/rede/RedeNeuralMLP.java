@@ -2,7 +2,6 @@ package cc.unip.tccfinal.rede;
 
 import java.util.Arrays;
 import javafx.scene.control.TextArea;
-import resources.background.IBackGround;
 
 public class RedeNeuralMLP {
 
@@ -24,8 +23,7 @@ public class RedeNeuralMLP {
         this.nrNeuroniosEntrada = nrNeuroniosEntrada;
         this.inicializarConexoesSinapticasDaRede();
         
-        this.prompt.setBackground(IBackGround.BACKGROUND_BLACK);
-        this.prompt.getStyleClass().add("prompt");
+        
     }
     
     public TextArea textAreaPromptView(){

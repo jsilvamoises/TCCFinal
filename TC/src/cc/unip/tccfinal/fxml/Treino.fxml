@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1158.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cc.unip.tccfinal.fxml.controller.TreinoController">
+   <top>
+      <ToolBar fx:id="toolBar" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="btnTreinarRede" mnemonicParsing="false" prefHeight="59.0" prefWidth="211.0" text="Treinar Rede" />
+        </items>
+         <padding>
+            <Insets left="15.0" />
+         </padding>
+      </ToolBar>
+   </top>
+   <left>
+      <VBox fx:id="boxEsquerdo" spacing="3.0" BorderPane.alignment="CENTER">
+         <children>
+            <ProgressBar fx:id="progressBar" progress="0.0" />
+            <Label fx:id="lblPorcentagemAmostra" text="Porcentagem da Amostra::" />
+            <Slider fx:id="sliderPorcentagemAmostra" />
+            <Separator />
+            <Label fx:id="lblNeuroniosEntrada" text="Nº Neuronios Entrada::" />
+            <Slider fx:id="sliderNeuroniosEntrada" />
+            <Separator />
+            <Label fx:id="lblNeuroniosSegundaCamada" text="Nº Neuronios 2º Camada::" />
+            <Slider fx:id="sliderNeuroniosSegundaCamada" />
+            <Separator />
+            <Label fx:id="lblErroMinimo" text="Erro Mínimo::" />
+            <Slider fx:id="sliderErroMinimo" />
+            <Separator />
+            <Label fx:id="lblFatorAdaptacao" text="Fator de Adaptação::" />
+            <Slider fx:id="sliderFatorAdaptacao" />
+            <Separator />
+            <Label fx:id="lblNumeroMaximoEpoca" text="Número Máximo de Épocas::" />
+            <Slider fx:id="sliderNumeroMaximoEpoca" />
+            <Separator />
+            <Button fx:id="btnRestaurarPadrao" mnemonicParsing="false" text="Restaurar Padrão" />
+         </children>
+         <BorderPane.margin>
+            <Insets left="10.0" top="10.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <BarChart fx:id="barChart">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="yAxis" side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <PieChart fx:id="pieChart" title="Erros / Acertos" />
+            <PieChart fx:id="pieChartAmostras" />
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <VBox fx:id="boxInferior" prefHeight="365.0" prefWidth="1158.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea fx:id="textAreaInfo" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

@@ -24,7 +24,7 @@ import javafx.scene.chart.XYChart;
  * @author Moisés
  */
 public class GraficoArduino {
-
+    
     private List<Sensor> dados = new ArrayList<>();
     private final Arduino arduino;
     SimpleDateFormat horaFormatada = new SimpleDateFormat("HH:mm:ss");

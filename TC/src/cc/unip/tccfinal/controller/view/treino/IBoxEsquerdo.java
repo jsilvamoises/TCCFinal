@@ -169,7 +169,7 @@ public class IBoxEsquerdo {
        // iTreino.setNrNeuroniosPrimeiraCamada(valorScrollPrimeiraCamada);
         atualizarValoresParaAnalise();
     }
-
+/* copiado*/
     private void configSlider(Slider... s) {
         for (Slider sl : s) {
 
@@ -181,6 +181,7 @@ public class IBoxEsquerdo {
             sl.setBlockIncrement(sl.getMax() / 100);
         }
     }
+   
 
     public VBox getBoxEsquerdo() {
         return boxEsquerdo;

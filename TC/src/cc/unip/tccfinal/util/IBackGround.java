@@ -1,4 +1,4 @@
-package resources.background;
+package cc.unip.tccfinal.util;
 
 
 import javafx.geometry.Insets;
@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
  * @author MOISES
  */
 public class IBackGround {
-    private static CornerRadii CORNER_10  = new CornerRadii(2, false);
+    private static final CornerRadii CORNER_10  = new CornerRadii(10, false);
     public static final Background  BACKGROUND_WHITE = new Background(new BackgroundFill(Color.WHITE, CORNER_10, Insets.EMPTY));
     public static final Background  BACKGROUND_DARKGREEN = new Background(new BackgroundFill(Color.DARKGREEN, CORNER_10, Insets.EMPTY));
     public static final Background  BACKGROUND_LIGHTSEAGREEN = new Background(new BackgroundFill(Color.LIGHTSEAGREEN, CORNER_10, Insets.EMPTY));
@@ -26,4 +26,6 @@ public class IBackGround {
     public static final Background  BACKGROUND_FIREBRICK = new Background(new BackgroundFill(Color.FIREBRICK, CORNER_10, Insets.EMPTY));
     public static final Background  BACKGROUND_MENU = new Background(new BackgroundFill(Color.DARKCYAN, CORNER_10, Insets.EMPTY));
     public static final Background  BACKGROUND_BLACK = new Background(new BackgroundFill(Color.BLACK, CORNER_10, Insets.EMPTY));
+    public static final Background  BACKGROUND_RED = new Background(new BackgroundFill(Color.RED, CORNER_10, Insets.EMPTY));
+    public static final Background  BACKGROUND_DARKCIAN = new Background(new BackgroundFill(Color.DARKCYAN, CORNER_10, Insets.EMPTY));
 }

@@ -10,8 +10,8 @@ package cc.unip.tccfinal.util;
  * @author Moisés
  */
 public class CommandCode {
-    public static final int LIGAR_ILUMINACAO = 100;
-    public static final int DESLIGAR_ILUMINACAO = 101;
+    public static final int LIGAR_ILUMINACAO = 101;
+    public static final int DESLIGAR_ILUMINACAO = 100;
     
     public static final int LIGAR_UMIDIFICADOR = 111;
     public static final int DESLIGAR_UMIDIFICADOR = 110;

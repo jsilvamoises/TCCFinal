@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import resources.background.IBackGround;
+import cc.unip.tccfinal.util.IBackGround;
 
 /**
  *

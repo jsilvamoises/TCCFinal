@@ -42,7 +42,7 @@ public class Treino extends Application {
         redeNeural = InterfaceTreinoRede.getInstance().setNrNeuroniosEntrada(3).setNrNeuroniosPrimeiraCamada(3).setPorcentagemTreinamento(50).prepararDados().build();
         toolbar = new IToolbar(redeNeural, this).builder();
         boxEsquerdo = new IBoxEsquerdo(redeNeural, this).build();
-        prompt = new IPrompt(redeNeural, this).setWidth(d.width).build();
+       
         graficos = new IGrafico(redeNeural, this).build();
     }
     @Override
@@ -58,7 +58,7 @@ public class Treino extends Application {
         // prompt.setPrefHeight(100);
         root.setTop(toolbar.getToolbar());
         root.setLeft(boxEsquerdo.getBoxEsquerdo());
-        root.setBottom(prompt.getBox());
+        
         root.setCenter(graficos.getBox());
 
         Scene scene = new Scene(root, d.width / 2, d.height - 100);

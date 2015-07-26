@@ -22,7 +22,7 @@ public class ObterDadosTreino {
     private final EquipamentoController controller;
     private List<Object[]> objetos = new ArrayList<>();
     private final List<Object[]> objetosParaTreinamento = new ArrayList<>();
-    private double porcentagemParaTreinamento = 10.0;
+    private double porcentagemParaTreinamento = 30.0;
 
     private DecimalFormat formato = new DecimalFormat("#0.000");
     private double MATRIZ_DADOS[][];
@@ -32,13 +32,11 @@ public class ObterDadosTreino {
     private static final double BIAS = 1.0;
     private int totalColunas = 0;
     private List<Double> listaKey;
-    
-    
-    //private RedeMLPExe rede;
 
+    //private RedeMLPExe rede;
     // -------------------------------------------------------------------------
     public ObterDadosTreino() {
-        
+
         this.controller = new EquipamentoController();
         // rede = RedeMLPExe.getInstance();
     }
@@ -64,10 +62,8 @@ public class ObterDadosTreino {
     private ObterDadosTreino separarAmostraParaTreinamento() {
         listaKey = controller.listKeyEquipamento();
         Double teste, teste1;
-        Integer posicoes[] = new Integer[listaKey.size()];
-        for (int i = 0; i < listaKey.size(); i++) {
-            posicoes[i] = 0;
-        }
+        Integer on = 0, off = 0;
+
         double sizeListaMaster = objetos.size();
         System.out.println("Tamanho da amostragem" + objetos.size());
         int totalAmostras = (int) Math.round((sizeListaMaster / 100) * porcentagemParaTreinamento);
@@ -77,48 +73,19 @@ public class ObterDadosTreino {
         System.out.println("Sera separado" + totalAmostras + " amostras....");
         Random random = new Random();
         int unidadeAmostra = totalAmostras / listaKey.size();
-        int primeiraLinha = 0;
-        int ultimaLinha = objetos.size();
-        int pontoDeQuebra = ultimaLinha / listaKey.size();
-        List<Integer> listaParaRemocao = new ArrayList<>();
+        
         if (totalAmostras > 0) {
 
-            
-            
-
             do {
-                
-
-                primeiraLinha = unidadeAmostra + 1;
-
                 int indice = random.nextInt((int) objetos.size());
-               
-                Object[] ob = objetos.get(indice);
-              
-                
-                  
-                for (int i = 0; i < listaKey.size(); i++) {
-                    teste = listaKey.get(i);
-                    teste1 = Double.valueOf(ob[1].toString());
-                    if (Objects.equals(teste, teste1)) {
-                        int x = posicoes[i].intValue();
-                        boolean add = x < unidadeAmostra  ;
-                        if (add ) {
-                            objetosParaTreinamento.add(objetos.remove(indice));
-                            posicoes[i] += 1;
-                            
-                        }
-                        
-
-                    }
-                }
+                objetosParaTreinamento.add(objetos.remove(indice));
             } while (objetosParaTreinamento.size() < Math.round(totalAmostras));
         }
 
-//        for (int i = 0; i < objetosParaTreinamento.size(); i++) {
-//            Object[] obj = objetosParaTreinamento.get(i);
-//            System.out.println("Inserindo para treino:: " + obj[1] + " com valor:: " + obj[3]);
-//        }
+        for (int i = 0; i < objetosParaTreinamento.size(); i++) {
+            Object[] obj = objetosParaTreinamento.get(i);
+            System.out.println("Inserindo para treino:: " + obj[1] + " com valor:: " + obj[3]);
+        }
 
         System.out.println("Foram selecionado para treinamento " + objetosParaTreinamento.size() + " objetos");
         System.out.println("O Total de " + sizeListaMaster);
@@ -139,8 +106,6 @@ public class ObterDadosTreino {
         gerarMatrizTransposta();
         return this;
     }
-
-    
 
     public void gerarMatrizTransposta() {
 

@@ -26,10 +26,7 @@ public class IPrompt {
          prompt = InterfaceTreinoRede.getInstance().build().getPrompt();    
     }
     
-    public IPrompt setWidth(double width){
-        prompt.setPrefWidth(width);
-        return this;
-    }
+    
     public IPrompt build(){ 
             
         footerBox.getChildren().add(prompt);

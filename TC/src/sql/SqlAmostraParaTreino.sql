@@ -1,5 +1,6 @@
---DELETE FROM tbl_equipamento
-INSERT INTO tbl_equipamento(`idEquipamento`,`valorSensorReferencia`, `statusEquipamento`) 
+DELETE FROM tcc2.tbl_equipamento;
+
+INSERT INTO tcc2.tbl_equipamento(`idEquipamento`,`valorSensorReferencia`, `statusEquipamento`) 
 VALUES
 --ILUMINACAO
 (0.100,32.0,1.0),
@@ -35,7 +36,7 @@ VALUES
 (0.300,35.0,0.0),
 (0.300,32.0,0.0),
 (0.300,29.0,0.0),
-(0.300,29.0,0.0),
+(0.300,27.0,0.0),
 (0.300,26.0,0.0),
 --UMIDIFICADOR
 (0.400,32.0,1.0),
@@ -49,4 +50,4 @@ VALUES
 (0.400,60.0,0.0),
 (0.400,63.0,0.0),
 (0.400,61.0,0.0);
-select * FROM tbl_equipamento
+select * FROM tcc2.tbl_equipamento;
