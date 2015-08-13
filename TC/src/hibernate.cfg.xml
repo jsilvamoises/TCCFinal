@@ -4,14 +4,14 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mariadb://localhost:3307/TCC2?createDatabaseIfNotExist=true</property>
+    <property name="hibernate.connection.url">jdbc:mariadb://localhost:3307/REDES_NEURAIS?createDatabaseIfNotExist=true</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">1982</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>
-    <mapping class="cc.unip.tccfinal.model.Equipamento"/>
+    <mapping class="cc.unip.tccfinal.fxml.model.Equipamento"/>
     
   </session-factory>
 </hibernate-configuration>

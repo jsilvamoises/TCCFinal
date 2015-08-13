@@ -6,6 +6,7 @@
 package cc.unip.tccfinal.rede;
 
 import cc.unip.tccfinal.fxml.auxiliar.DadosGraficoBarras;
+import cc.unip.tccfinal.fxml.dados.DadosRepository;
 import cc.unip.tccfinal.rede.treinamento.ObterDadosTreino;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,13 @@ public class InterfaceTreinoRede {
     private int erroClassificacao, acertoClassificacao;
     private int listaTreinoSize, listaVerificacaoSize;
     private List<DadosGraficoBarras> dadosGraficoBarras = new ArrayList<>();
+    private boolean isTreinada = false;
 
     public static InterfaceTreinoRede getInstance() {
         return instance == null ? instance = new InterfaceTreinoRede() : instance;
     }
     ObterDadosTreino tr;
+   // DadosRepository tr;
 
     private InterfaceTreinoRede() {
         rede = new RedeNeuralMLP(nrNeuroniosPrimeiraCamada, nrNeuroniosEntrada);
@@ -48,6 +51,13 @@ public class InterfaceTreinoRede {
      #########################################################################*/
 
     public InterfaceTreinoRede prepararDados() {
+        /*tr = new DadosRepository();
+        tr.setPorcentagemParaTreinamento(porcentTreino);
+        tr.processar();
+        CONJUNTO_TREINAMENTO = tr.getMatrizTreinamento();
+        VALORES_ESPERADOS = tr.getResultadoEsperado();
+        listaTreinoSize = tr.getTamanhoListraTreino();
+        listaVerificacaoSize = tr.getListaParaTeste().size();*/
         tr = new ObterDadosTreino().setPorcentagemParaTreinamento(porcentTreino).build();
         CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
         VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
@@ -104,7 +114,7 @@ public class InterfaceTreinoRede {
             this.analisarAmostras();
             dadosGraficoBarras.add(new DadosGraficoBarras(++key, acertoClassificacao, erroClassificacao));
         } while (erroClassificacao > 0 && porcentTreino < 100);
-
+        isTreinada = true;
         // }
     }
 
@@ -209,6 +219,10 @@ public class InterfaceTreinoRede {
 
     public int getListaVerificacaoSize() {
         return listaVerificacaoSize;
+    }
+
+    public boolean isIsTreinada() {
+        return isTreinada;
     }
 
 }

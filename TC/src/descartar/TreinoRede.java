@@ -1,3 +1,5 @@
+package descartar;
+
 ///*
 // * To change this license header, choose License Headers in Project Properties.
 // * To change this template file, choose Tools | Templates
@@ -11,57 +13,58 @@
 // *
 // * @author MOISES
 // */
-//public class TreinoRede {
+//public class InterfaceTreinoRede {
 //
 //    private double[][] CONJUNTO_TREINAMENTO;
-//    private double[] VALORES_ESPERADOS = {0.0, 0.0, 1.0, 1.0};
-//    private int porcentTreino;
+//    private double[] VALORES_ESPERADOS;
+//    private int porcentTreino=10;
 //    private int nrNeuroniosPrimeiraCamada = 3;
 //    private int nrNeuroniosEntrada = 3;
 //    private RedeNeuralMLP rede;
-//    private static TreinoRede instance;
+//    private static InterfaceTreinoRede instance;
 //
-//    public static TreinoRede getInstance() {
-//        return instance == null ? instance = new TreinoRede() : instance;
+//    public static InterfaceTreinoRede getInstance() {
+//        return instance == null ? instance = new InterfaceTreinoRede() : instance;
 //    }
 //    ObterDadosTreino tr;
 //
-//    private TreinoRede() {
+//    private InterfaceTreinoRede() {
 //    }
 //    /*#########################################################################
 //    ##########  RECUPERA DODOS DO BANCO E RETORNA CONJUNTO TREINO #############
 //    #########################################################################*/
-//    public TreinoRede prepararDados(int porcentagem) {
-//        tr = new ObterDadosTreino().setPorcentagemParaTreinamento(50).build();
+//    public InterfaceTreinoRede prepararDados(int porcentagem) {
+//        this.porcentTreino = porcentagem;
+//        tr = new ObterDadosTreino().setPorcentagemParaTreinamento(porcentTreino).build();
 //        CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
 //        VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
 //        return this;
 //    }
-//
-//    public TreinoRede build() {
+//    // -------------------------------------------------------------------------
+//    public InterfaceTreinoRede build() {
 //        rede = new RedeNeuralMLP(nrNeuroniosPrimeiraCamada, nrNeuroniosEntrada);
 //        return this;
 //    }
-//
+//    // --------------- TREINA A REDE COM OS DADOS OBTIDO DO BANCO --------------
 //    public void treinar() {
 //        rede.treinar(CONJUNTO_TREINAMENTO, VALORES_ESPERADOS);
 //    }
-//
+//    // ----------- CLASSIFICA UMA AMOSTRA RECEBIDA E RETORNA 0 OU 1 ------------
 //    public int classificar(double[] amostra) {
 //        return rede.classificar(amostra);
 //    }
-//
-//    public TreinoRede setPorcentagemTreinamento(int porcentagemTreinamento) {
+//    // --------- ATERA A PORCENTAGEM DE DADOS OBTIDOS A SEREM TREINADOS --------
+//    public InterfaceTreinoRede setPorcentagemTreinamento(int porcentagemTreinamento) {
 //        this.porcentTreino = porcentagemTreinamento;
 //        return this;
 //    }
-//
-//    public TreinoRede setNrNeuroniosPrimeiraCamada(int nrNeuroniosPrimeiraCamada) {
+//    // -------- ALTERA A QUANTIDADE DE NEURONIO PRIMEIRA CAMADA ----------------
+//    public InterfaceTreinoRede setNrNeuroniosPrimeiraCamada(int nrNeuroniosPrimeiraCamada) {
 //        this.nrNeuroniosPrimeiraCamada = nrNeuroniosPrimeiraCamada;
 //        return this;
 //    }
-//
-//    public TreinoRede setNrNeuroniosEntrada(int nrNeuroniosEntrada) {
+//    // -------- ALTERA A QUANTIDADE DE NEURONIOS ENTRADA -----------------------
+//    public InterfaceTreinoRede setNrNeuroniosEntrada(int nrNeuroniosEntrada) {
 //        this.nrNeuroniosEntrada = nrNeuroniosEntrada;
 //        return this;
 //    }

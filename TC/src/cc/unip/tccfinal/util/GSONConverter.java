@@ -5,7 +5,7 @@
  */
 package cc.unip.tccfinal.util;
 
-import cc.unip.tccfinal.model.Sensor;
+import cc.unip.tccfinal.fxml.model.Sensor;
 import cc.unip.tccfinal.model.StatusEquipamento;
 import com.google.gson.Gson;
 

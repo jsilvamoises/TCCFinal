@@ -5,7 +5,7 @@
  */
 package cc.unip.tccfinal.controller.view.monitor;
 
-import cc.unip.tccfinal.model.Sensor;
+import cc.unip.tccfinal.fxml.model.Sensor;
 import cc.unip.tccfinal.serialport.Arduino;
 import cc.unip.tccfinal.util.CacheLeitura;
 import java.text.SimpleDateFormat;

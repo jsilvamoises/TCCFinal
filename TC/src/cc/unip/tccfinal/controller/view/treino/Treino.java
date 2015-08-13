@@ -9,13 +9,9 @@ import cc.unip.tccfinal.rede.InterfaceTreinoRede;
 import java.awt.Dimension;
 
 import java.awt.Toolkit;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 

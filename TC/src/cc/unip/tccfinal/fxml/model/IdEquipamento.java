@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cc.unip.tccfinal.model;
+package cc.unip.tccfinal.fxml.model;
 
 /**
  *

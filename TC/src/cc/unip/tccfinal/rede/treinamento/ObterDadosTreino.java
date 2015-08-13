@@ -5,7 +5,7 @@
  */
 package cc.unip.tccfinal.rede.treinamento;
 
-import cc.unip.tccfinal.controller.EquipamentoController;
+import cc.unip.tccfinal.fxml.controller.EquipamentoController;
 //import cc.unip.tccfinal.rede.RedeMLPExe;
 import java.text.DecimalFormat;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-DELETE FROM tcc2.tbl_equipamento;
+DELETE FROM redes_neurais.tbl_equipamento;
 
-INSERT INTO tcc2.tbl_equipamento(`idEquipamento`,`valorSensorReferencia`, `statusEquipamento`) 
+INSERT INTO redes_neurais.tbl_equipamento(`idEquipamento`,`valorSensorReferencia`, `statusEquipamento`) 
 VALUES
 --ILUMINACAO
 (0.100,32.0,1.0),
@@ -50,4 +50,4 @@ VALUES
 (0.400,60.0,0.0),
 (0.400,63.0,0.0),
 (0.400,61.0,0.0);
-select * FROM tcc2.tbl_equipamento;
+select * FROM redes_neurais.tbl_equipamento;

@@ -5,7 +5,11 @@
  */
 package cc.unip.tccfinal.fxml.controller;
 
-import cc.unip.tccfinal.model.Sensor;
+import cc.unip.tccfinal.fxml.EnumEquipamentos;
+import cc.unip.tccfinal.fxml.dados.DadosRepository;
+import cc.unip.tccfinal.fxml.main.Treino;
+import cc.unip.tccfinal.fxml.model.Sensor;
+import cc.unip.tccfinal.rede.InterfaceTreinoRede;
 import cc.unip.tccfinal.serialport.Arduino;
 import cc.unip.tccfinal.serialport.JavaSerialPort;
 import cc.unip.tccfinal.util.CacheLeitura;
@@ -41,10 +45,17 @@ import cc.unip.tccfinal.util.IBackGround;
 import cc.unip.tccfinal.util.SystemInfo;
 import eu.hansolo.enzo.gauge.OneEightyGauge;
 import eu.hansolo.enzo.gauge.OneEightyGaugeBuilder;
-import java.util.Calendar;
 import javafx.animation.AnimationTimer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -53,6 +64,14 @@ import javafx.scene.paint.Stop;
  */
 public class MonitorController implements Initializable {
 
+    @FXML
+    private Button btSubmeter;
+    @FXML
+    private Text lblResultado;
+    @FXML
+    private ComboBox<?> cbEquipamento;
+    @FXML
+    private TextField tfValorSensor;
     @FXML
     private VBox boxDireito;
     @FXML
@@ -110,11 +129,14 @@ public class MonitorController implements Initializable {
 
     @FXML
     private TableColumn<String, Number> tcUmidade;
+    @FXML
+    private Button btnTreinar;
     // ========================================================================
     private boolean estaLendoPorta, estaAutomatico, estaSalvandoNoBanco, estaOnAquecedor, estaOnArcondicionado, estaOnIluminacao, estaOnUmidificado;
     private Arduino arduino;
     private List<Sensor> dados = new ArrayList<>();
-
+    private Sensor sensor;
+    double idEquipamento, valorSensor;
     XYChart.Series temperatura;
     XYChart.Series umidade;// = new XYChart.Series();
     XYChart.Series luminosidade;// = new XYChart.Series();
@@ -125,6 +147,9 @@ public class MonitorController implements Initializable {
     private Background backDefaut = IBackGround.BACKGROUND_RED;
     private OneEightyGauge gauge;
     private long lastTimerCall;
+
+    private InterfaceTreinoRede itr;
+    private static final double BIAS = 1.0;
 
     private void criarLCDs() {
         GridPane grid = new GridPane();
@@ -163,8 +188,25 @@ public class MonitorController implements Initializable {
         boxDireito.getChildren().add(grid);
     }
 
+    private void inicializarComboBox() {
+
+        ObservableList options = FXCollections.observableArrayList();
+        ControllerEnumIdEquipamentos controller = new ControllerEnumIdEquipamentos();
+
+        for (EnumEquipamentos id : controller.getIds()) {
+
+            options.add(id.getValor());
+            System.out.println(id.name());
+        }
+        options.sorted();
+        cbEquipamento.setItems(options);
+        cbEquipamento.valueProperty().addListener((ObservableValue<? extends Object> observable, Object oldValue, Object newValue) -> {
+            idEquipamento = (double) newValue;
+        });
+    }
+
     private void criarGaugeMemoria() {
-        
+
         AnimationTimer timer;
         gauge = OneEightyGaugeBuilder.create()
                 .animated(true).title("Memória").unit("MB")
@@ -184,9 +226,9 @@ public class MonitorController implements Initializable {
             public void handle(long now) {
                 if (now > lastTimerCall + 2_000_000_000l) {
                     gauge.setValue(SystemInfo.getUsedMemoryInMB());
-                    gauge.setMaxValue(SystemInfo.getTotalMemoryInMB());                    
+                    gauge.setMaxValue(SystemInfo.getTotalMemoryInMB());
                     lastTimerCall = now;
-                   
+
                 }
             }
         };
@@ -263,11 +305,29 @@ public class MonitorController implements Initializable {
                 arduino.write(CommandCode.DESLIGAR_UMIDIFICADOR);
             }
         });
+
+        btSubmeter.setOnMouseClicked((MouseEvent event) -> {
+            double analizar[] = new double[3];
+            //idEquipamento, valorSensor;
+            if (idEquipamento > 0) {
+                analizar[0] = idEquipamento;
+                analizar[1] = Double.parseDouble(tfValorSensor.getText()) / 100;
+                analizar[2] = (double) 1.0;//
+            }
+            lblResultado.setText("Res:: " + InterfaceTreinoRede.getInstance().classificar(analizar));
+            System.out.println("Clicou né");
+        });
+
+        btnTreinar.setOnMouseClicked((MouseEvent event) -> {
+            new Treino().start(new Stage());
+        });
+        itr = InterfaceTreinoRede.getInstance();
         dados = CacheLeitura.getInstance().getDados();
+        inicializarComboBox();
         criarLCDs();
         startGerenciadorBotoesThread();
         criarGaugeMemoria();
-        
+        startProcessarAutomatico();// INICIA VERIFICAÇÃO SE É PARA PROCESSAR OS DADOS VINDOS DO SENSOR
 
     }
 
@@ -421,6 +481,104 @@ public class MonitorController implements Initializable {
         // PISCA O BOTÃO BTN ALARME MAGNETISMO CASO ESTEJA ON
         if (estaOnUmidificado) {
             alterarBackgraund(tbUmidificador, IBackGround.BACKGROUND_RED, IBackGround.BACKGROUND_DARKCIAN);
+        }
+    }
+
+    private void startProcessarAutomatico() {
+        TimerTask update = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    processarAutomatico();
+                });
+            }
+        };
+        new Timer().scheduleAtFixedRate(update, 0, 1000);
+    }
+    /*0.1 ILUMINACAO
+     * 0.2 AR CONDICIONADO
+     * 0.3 AQUECEDOR
+     * 0.4 UMIDIFICADOR
+     */
+
+    private void processarAutomatico() {
+        if (estaAutomatico) {
+            if (!itr.isIsTreinada()) {
+                itr.prepararDados();
+                itr.treinar();
+                
+            } else {
+                sensor = CacheLeitura.getInstance().getUltimoDadoRecebidoSensor();
+                double idSensor[] = {0.1,0.2, 0.3, 0.4};
+                double valoresColetados[] = {sensor.getLuminosidade()/100,sensor.getTemperatura()/100, sensor.getTemperatura()/100, sensor.getUmidade()/100};
+                for (int i = 0; i < 4; i++) {
+                    double teste[] = {idSensor[i], valoresColetados[i], BIAS};
+                    System.out.println(teste[0]+","+teste[1]+","+teste[2]);
+                    setEstadoEquipamento(teste, i+1);
+                }
+
+            }
+        }
+
+    }
+    /*MODIFICA O ESTADOS DOS EQUIPAMENTOS EM TEMPO DE EXECUÇÃO DE ACORDA COM VA
+     LORES RETORNADOS DA AVALIAÇÃO DA REDE NEURAL*/
+
+    private void setEstadoEquipamento(double[] valores, int idEquipamento) {
+        switch (idEquipamento) {
+            case 1: //ILUMINAÇÃO
+                if (itr.classificar(valores) == 1) {
+                    estaOnIluminacao = true;
+                    arduino.write(101);
+                    tbIluminacao.setBackground(backDefaut);
+                    tbIluminacao.setText("ON");
+                } else {
+                    estaOnIluminacao = false;
+                    arduino.write(100);
+                    tbIluminacao.setBackground(IBackGround.BACKGROUND_DARKCIAN);
+                    tbIluminacao.setText("OFF");
+                }
+                break;
+            case 2: //AR CONDICIONADO ATIVA / DESTIVA
+                if (itr.classificar(valores) == 1) {
+                    estaOnArcondicionado = true;
+                    arduino.write(131);
+                    tbArcondicionado.setBackground(backDefaut);
+                    tbArcondicionado.setText("ON");
+                } else {
+                    estaOnArcondicionado = false;
+                    arduino.write(130);
+                    tbArcondicionado.setBackground(IBackGround.BACKGROUND_DARKCIAN);
+                    tbArcondicionado.setText("OFF");
+                }
+                break;
+            case 3: //AQUECEDOR ATIVA / DESATIVA
+                if (itr.classificar(valores) == 1) {
+                    estaOnAquecedor = true;
+                    arduino.write(121);
+                    tbAquecedor.setBackground(backDefaut);
+                    tbAquecedor.setText("ON");
+                } else {
+                    estaOnAquecedor = false;
+                    arduino.write(120);
+                    tbAquecedor.setBackground(IBackGround.BACKGROUND_DARKCIAN);
+                    tbAquecedor.setText("OFF");
+                }
+                break;
+            case 4: // UMIDIFICADOR ATIVA / DESATIVA
+                if (itr.classificar(valores) == 1) {
+                    estaOnUmidificado = true;
+                    arduino.write(111);
+                    tbUmidificador.setBackground(backDefaut);
+                    tbUmidificador.setText("ON");
+                } else {
+                    estaOnUmidificado = false;
+                    arduino.write(110);
+                    tbUmidificador.setBackground(IBackGround.BACKGROUND_DARKCIAN);
+                    tbUmidificador.setText("OFF");
+                }
+                break;
+
         }
     }
 

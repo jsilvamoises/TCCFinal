@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cc.unip.tccfinal.model;
+package cc.unip.tccfinal.fxml.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Moisés
  */
-public class Sensor {
+@Embeddable
+public class Sensor implements Serializable {
     private Date horaAmostra;
     private double temperatura;
     private double umidade;
@@ -23,6 +26,7 @@ public class Sensor {
     private byte statusUmidificador;
     private byte statusGeral;
     
+  
     
 
     public Date getHoraAmostra() {
@@ -119,6 +123,9 @@ public class Sensor {
     public String toString() {
         return "Sensor{" + "horaAmostra=" + horaAmostra + ", temperatura=" + temperatura + ", umidade=" + umidade + ", luminosidade=" + luminosidade + ", statusIluminacao=" + statusIluminacao + ", statusAquecedor=" + statusAquecedor + ", statusArcondicionado=" + statusArcondicionado + ", statusUmidificador=" + statusUmidificador + ", statusGeral=" + statusGeral + '}';
     }
+    
+    
+     
     
     
 }
