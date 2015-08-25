@@ -5,9 +5,10 @@
  */
 package cc.unip.tccfinal.fxml.controller;
 
-import cc.unip.tccfinal.controller.view.treino.DadosGraficoErrAce;
+//import cc.unip.tccfinal.controller.view.treino.DadosGraficoErrAce;
 import cc.unip.tccfinal.fxml.auxiliar.DadosGraficoBarras;
-import cc.unip.tccfinal.rede.InterfaceTreinoRede;
+import cc.unip.tccfinal.fxml.model.DadosGraficoErrAce;
+import cc.unip.tccfinal.fxml.rede.InterfaceTreinoRede;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -172,7 +174,7 @@ public class TreinoController implements Initializable {
         qtdNeuroniosEntrada = 4;
         qtdNeuroniosSegundaCamada = 3;
         numeroMaximoEpocas = 100000;
-        qtdPorcentagemAmostra = 25;
+        qtdPorcentagemAmostra = 30;
         updateValoresSlider();
     }
 
@@ -224,20 +226,22 @@ public class TreinoController implements Initializable {
      #########################################################################*/
 
     private void configToolbar() {
-        btnTreinarRede.setOnAction((ActionEvent event) -> {
-            iTreino.setErroMinimo(erroMinimo)
-                    .setFatorAdaptacao(fatorAdaptacao)
-                    .setNrNeuroniosEntrada(qtdNeuroniosEntrada)
-                    .setNrNeuroniosPrimeiraCamada(qtdNeuroniosSegundaCamada)
-                    .setNumeroMaximoEpocas(numeroMaximoEpocas)
-                    .setPorcentagemTreinamento(qtdPorcentagemAmostra)                    
-                    .treinar();
+        btnTreinarRede.setOnAction(new EventHandler<ActionEvent>() {
 
-            gerarGraficoPizza();
-            gerarGraficoBarras();
-            gerarGraficoAmostras();
-            //configurarGraficos(pieChart, pieChartAmostras);
-            
+            public void handle(ActionEvent event) {
+                iTreino.setErroMinimo(erroMinimo)
+                        .setFatorAdaptacao(fatorAdaptacao)
+                        .setNrNeuroniosEntrada(qtdNeuroniosEntrada)
+                        .setNrNeuroniosPrimeiraCamada(qtdNeuroniosSegundaCamada)            
+                        .setNumeroMaximoEpocas(numeroMaximoEpocas)
+                        .setPorcentagemTreinamento(qtdPorcentagemAmostra)
+                        .treinar();
+                
+                gerarGraficoPizza();
+                gerarGraficoBarras();
+                gerarGraficoAmostras();
+                //configurarGraficos(pieChart, pieChartAmostras);
+            }
         });
     }
 

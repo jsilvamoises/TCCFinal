@@ -9,10 +9,13 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -30,7 +33,9 @@ public class Monitor extends Application {
         }
         
         Scene scene = new Scene(root);
-        
+        primaryStage.setOnCloseRequest((WindowEvent event) -> {
+            System.exit(0);
+        });
         primaryStage.setTitle("Hello World!");
         primaryStage.setMaximized(true);
         primaryStage.setScene(scene);

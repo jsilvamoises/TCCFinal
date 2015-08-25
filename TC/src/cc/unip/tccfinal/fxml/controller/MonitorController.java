@@ -5,15 +5,15 @@
  */
 package cc.unip.tccfinal.fxml.controller;
 
+import cc.unip.tccfinal.fxml.model.TableDados;
 import cc.unip.tccfinal.fxml.EnumEquipamentos;
-import cc.unip.tccfinal.fxml.dados.DadosRepository;
 import cc.unip.tccfinal.fxml.main.Treino;
 import cc.unip.tccfinal.fxml.model.Sensor;
-import cc.unip.tccfinal.rede.InterfaceTreinoRede;
-import cc.unip.tccfinal.serialport.Arduino;
-import cc.unip.tccfinal.serialport.JavaSerialPort;
-import cc.unip.tccfinal.util.CacheLeitura;
-import cc.unip.tccfinal.util.CommandCode;
+import cc.unip.tccfinal.fxml.rede.InterfaceTreinoRede;
+import cc.unip.tccfinal.fxml.serialport.Arduino;
+import cc.unip.tccfinal.fxml.serialport.JavaSerialPort;
+import cc.unip.tccfinal.fxml.util.CacheLeitura;
+import cc.unip.tccfinal.fxml.util.CommandCode;
 import eu.hansolo.enzo.lcd.Lcd;
 import eu.hansolo.enzo.lcd.LcdBuilder;
 import java.net.URL;
@@ -41,8 +41,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import cc.unip.tccfinal.util.IBackGround;
-import cc.unip.tccfinal.util.SystemInfo;
+import cc.unip.tccfinal.fxml.util.IBackGround;
+import cc.unip.tccfinal.fxml.util.SystemInfo;
 import eu.hansolo.enzo.gauge.OneEightyGauge;
 import eu.hansolo.enzo.gauge.OneEightyGaugeBuilder;
 import javafx.animation.AnimationTimer;
@@ -51,6 +51,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
@@ -78,55 +79,38 @@ public class MonitorController implements Initializable {
     private VBox boxEsquerdo;
     @FXML
     private ToggleButton tbSalvarDados;
-
     @FXML
-    private TableColumn<?, ?> tcStatusAquecedor;
-
+    private TableColumn tcStatusAquecedor;
     @FXML
     private CategoryAxis xAxis;
-
     @FXML
-    private TableColumn<?, ?> tcLuminosidade;
-
+    private TableColumn tcLuminosidade;
     @FXML
-    private TableColumn<?, ?> tcStatusArcondicionado;
-
+    private TableColumn tcStatusArcondicionado;
     @FXML
     private ToggleButton tbIniciarLeituraPorta;
-
     @FXML
-    private TableColumn<?, ?> tcTemperatura;
-
+    private TableColumn tcTemperatura;
     @FXML
     private ToggleButton tbIluminacao;
-
     @FXML
     private ToggleButton tbAquecedor;
-
     @FXML
     private NumberAxis yAxis;
-
     @FXML
-    private TableColumn<?, ?> tcStatusUmidificador;
-
+    private TableColumn tcStatusUmidificador;
     @FXML
     private ToggleButton tbAutomatico;
-
     @FXML
     private ToggleButton tbArcondicionado;
-
     @FXML
-    private TableColumn<?, ?> tcStatusIuminacao;
-
+    private TableColumn tcStatusIuminacao;
     @FXML
     private LineChart<?, ?> chart;
-
     @FXML
     private ToggleButton tbUmidificador;
-
     @FXML
-    private TableView<?> table;
-
+    private TableView table;
     @FXML
     private TableColumn<String, Number> tcUmidade;
     @FXML
@@ -148,9 +132,13 @@ public class MonitorController implements Initializable {
     private OneEightyGauge gauge;
     private long lastTimerCall;
 
+    private ObservableList<TableDados> obDados;
+
     private InterfaceTreinoRede itr;
     private static final double BIAS = 1.0;
-
+    /**
+     * Cria os LCDs de monitoramento de coleta de dados
+     */
     private void criarLCDs() {
         GridPane grid = new GridPane();
         // -----------------------------------------------------------------------------------------------
@@ -187,26 +175,28 @@ public class MonitorController implements Initializable {
         grid.setPrefHeight(300);
         boxDireito.getChildren().add(grid);
     }
-
+    /**
+     * Inicializa o combobox
+     */
     private void inicializarComboBox() {
-
         ObservableList options = FXCollections.observableArrayList();
         ControllerEnumIdEquipamentos controller = new ControllerEnumIdEquipamentos();
-
+        
         for (EnumEquipamentos id : controller.getIds()) {
-
             options.add(id.getValor());
             System.out.println(id.name());
         }
+        
         options.sorted();
         cbEquipamento.setItems(options);
         cbEquipamento.valueProperty().addListener((ObservableValue<? extends Object> observable, Object oldValue, Object newValue) -> {
             idEquipamento = (double) newValue;
         });
     }
-
+    /**
+     * Cria gauge que irá monitorar o uso de memória.
+     */
     private void criarGaugeMemoria() {
-
         AnimationTimer timer;
         gauge = OneEightyGaugeBuilder.create()
                 .animated(true).title("Memória").unit("MB")
@@ -219,7 +209,6 @@ public class MonitorController implements Initializable {
                         new Stop(1.00, Color.RED))
                 .build();
         boxEsquerdo.getChildren().add(gauge);
-
         lastTimerCall = System.nanoTime();
         timer = new AnimationTimer() {
             @Override
@@ -273,7 +262,7 @@ public class MonitorController implements Initializable {
         tbAutomatico.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             estaAutomatico = newValue;
             if (estaAutomatico) {
-
+                itr = InterfaceTreinoRede.getInstance();
             } else {
 
             }
@@ -321,23 +310,29 @@ public class MonitorController implements Initializable {
         btnTreinar.setOnMouseClicked((MouseEvent event) -> {
             new Treino().start(new Stage());
         });
-        itr = InterfaceTreinoRede.getInstance();
+        //itr = InterfaceTreinoRede.getInstance();
         dados = CacheLeitura.getInstance().getDados();
         inicializarComboBox();
         criarLCDs();
         startGerenciadorBotoesThread();
         criarGaugeMemoria();
         startProcessarAutomatico();// INICIA VERIFICAÇÃO SE É PARA PROCESSAR OS DADOS VINDOS DO SENSOR
-
+        startUpdateTableThread();
     }
-
+    /**
+     * Altera o background de tooglebutton
+     * @param tb 
+     */
     private void setBackGroundToogleButtonsDisabled(ToggleButton... tb) {
         for (ToggleButton t : tb) {
             t.setBackground(IBackGround.BACKGROUND_DARKCIAN);
             t.setText("OFF");
         }
     }
-
+    /**
+     * Altera o background de tooglebutton
+     * @param tb 
+     */
     private void setBackGroundToogleButtonsEnabled(ToggleButton... tb) {
         for (ToggleButton t : tb) {
             t.setBackground(backDefaut);
@@ -356,7 +351,11 @@ public class MonitorController implements Initializable {
             });
         }
     }
-
+    // -------------------------------------------------------------------------
+    /**
+     * Inicia o processo de leitura de portas que o arduino está enviado dados
+     * @return 
+     */
     private boolean lerPortasArduino() {
 
         List<String> choises = JavaSerialPort.getInstance().getPortas();
@@ -380,8 +379,10 @@ public class MonitorController implements Initializable {
         }
 
     }
-
-    /*CHART*/
+    // -------------------------------------------------------------------------
+    /**
+     * Inicia a thread que irá atualizar a interfaçe como os dados do gráfico
+     */
     private void startUpdateGraficoThread() {
         TimerTask update = new TimerTask() {
             @Override
@@ -396,7 +397,10 @@ public class MonitorController implements Initializable {
         };
         new Timer().scheduleAtFixedRate(update, 0, 1000);
     }
-
+    // -------------------------------------------------------------------------
+    /**
+     * Gera o gráfico com os utimos dados coletados
+     */
     private void gerarGrafico() {
         if (dados.size() > 0) {
             chart.getData().clear();
@@ -436,7 +440,11 @@ public class MonitorController implements Initializable {
 
         }
     }
-
+    // -------------------------------------------------------------------------
+    /**
+     * Inicia a thread que irá ficar analisando se precisa alterar a cor dos bo
+     * tões
+     */
     private void startGerenciadorBotoesThread() {
         TimerTask update = new TimerTask() {
             @Override
@@ -453,7 +461,10 @@ public class MonitorController implements Initializable {
         };
         new Timer().scheduleAtFixedRate(update, 0, 1000);
     }
-
+    // -------------------------------------------------------------------------
+    /**
+     * Altera a cor dos botões que estão ativos no momento, 
+     */
     private void piscarBotoes() {
         if (estaLendoPorta) {
             alterarBackgraund(tbIniciarLeituraPorta, IBackGround.BACKGROUND_RED, IBackGround.BACKGROUND_DARKCIAN);
@@ -495,35 +506,38 @@ public class MonitorController implements Initializable {
         };
         new Timer().scheduleAtFixedRate(update, 0, 1000);
     }
-    /*0.1 ILUMINACAO
+
+    // -------------------------------------------------------------------------
+    /* 0.1 ILUMINACAO
      * 0.2 AR CONDICIONADO
      * 0.3 AQUECEDOR
      * 0.4 UMIDIFICADOR
      */
-
+    /**
+     * Inicia o processamento automático
+     */
     private void processarAutomatico() {
         if (estaAutomatico) {
             if (!itr.isIsTreinada()) {
-                itr.prepararDados();
-                itr.treinar();
-                
+
             } else {
                 sensor = CacheLeitura.getInstance().getUltimoDadoRecebidoSensor();
-                double idSensor[] = {0.1,0.2, 0.3, 0.4};
-                double valoresColetados[] = {sensor.getLuminosidade()/100,sensor.getTemperatura()/100, sensor.getTemperatura()/100, sensor.getUmidade()/100};
+                double idSensor[] = {0.1, 0.2, 0.3, 0.4};
+                double valoresColetados[] = {sensor.getLuminosidade() / 100, sensor.getTemperatura() / 100, sensor.getTemperatura() / 100, sensor.getUmidade() / 100};
                 for (int i = 0; i < 4; i++) {
                     double teste[] = {idSensor[i], valoresColetados[i], BIAS};
-                    System.out.println(teste[0]+","+teste[1]+","+teste[2]);
-                    setEstadoEquipamento(teste, i+1);
+                    System.out.println(teste[0] + "," + teste[1] + "," + teste[2]);
+                    setEstadoEquipamento(teste, i + 1);
                 }
-
             }
         }
-
     }
-    /*MODIFICA O ESTADOS DOS EQUIPAMENTOS EM TEMPO DE EXECUÇÃO DE ACORDA COM VA
-     LORES RETORNADOS DA AVALIAÇÃO DA REDE NEURAL*/
 
+    // -------------------------------------------------------------------------
+    /**
+     * Modifica os estados dos equipamentos em tempo de execução de acordo com
+     * valores retornados do processamento automatico
+     */
     private void setEstadoEquipamento(double[] valores, int idEquipamento) {
         switch (idEquipamento) {
             case 1: //ILUMINAÇÃO
@@ -578,14 +592,12 @@ public class MonitorController implements Initializable {
                     tbUmidificador.setText("OFF");
                 }
                 break;
-
         }
     }
 
-    /*
-     * #########################################################################
-     * #################### ALTERA O BACKGROUND DOS BOTÕES #####################
-     * #########################################################################
+    // -------------------------------------------------------------------------
+    /**
+     * Altera a cor do backgroud dos botões ativados
      */
     private void alterarBackgraund(ToggleButton botão, Background b1, Background b2) {
         if (botão.getBackground().equals(b1)) {
@@ -593,6 +605,76 @@ public class MonitorController implements Initializable {
         } else {
             botão.setBackground(b1);
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Inicia o Thread que ficará atualizando a tabela
+     */
+
+    private void startUpdateTableThread() {
+        configTable();
+        TimerTask update = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        preencherTabela();
+                    }
+                });
+            }
+        };
+        new Timer().scheduleAtFixedRate(update, 0, 1000);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Preenche a tabela com os ultimos dados coletados
+     */
+
+    private void preencherTabela() {
+        //obDados = FXCollections.observableArrayList();
+        dados = CacheLeitura.getInstance().getDados();
+        if (!dados.isEmpty()) {
+            obDados.clear();
+            try {
+                dados.stream().forEach((dado) -> {
+                    obDados.add(new TableDados()
+                            .setLuminosidade(dado.getLuminosidade())
+                            .setTemperatura(dado.getTemperatura())
+                            .setUmidade(dado.getUmidade())
+                            .setStatusAquecedor(dado.getStatusAquecedor())
+                            .setStatusArcondicionado(dado.getStatusArcondicionado())
+                            .setStatusIluminacao(dado.getStatusIluminacao())
+                            .setStatusUmidificador(dado.getStatusUmidificador())
+                    );//Fim Add Lista
+                });
+                table.setItems(obDados);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Congigura as colunas da Tabela
+     */
+
+    public void configTable() {
+        obDados = FXCollections.observableArrayList();
+        // ---------------------------------------------------------------------
+        tcTemperatura.setCellValueFactory(new PropertyValueFactory("temperatura"));
+        tcLuminosidade.setCellValueFactory(new PropertyValueFactory("luminosidade"));
+        tcUmidade.setCellValueFactory(new PropertyValueFactory("umidade"));
+        // ---------------------------------------------------------------------
+        tcStatusAquecedor.setCellValueFactory(new PropertyValueFactory("statusAquecedor"));
+        tcStatusArcondicionado.setCellValueFactory(new PropertyValueFactory("statusArcondicionado"));
+        tcStatusUmidificador.setCellValueFactory(new PropertyValueFactory("statusUmidificador"));
+        tcStatusIuminacao.setCellValueFactory(new PropertyValueFactory("statusIluminacao"));
 
     }
 

@@ -6,7 +6,7 @@
 package teste;
 
 import cc.unip.tccfinal.fxml.model.Equipamento;
-import cc.unip.tccfinal.util.HibernateUtil;
+import cc.unip.tccfinal.fxml.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;

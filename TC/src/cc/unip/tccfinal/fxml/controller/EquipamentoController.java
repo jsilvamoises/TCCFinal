@@ -6,7 +6,7 @@
 package cc.unip.tccfinal.fxml.controller;
 
 import cc.unip.tccfinal.fxml.model.Equipamento;
-import cc.unip.tccfinal.util.HibernateUtil;
+import cc.unip.tccfinal.fxml.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;

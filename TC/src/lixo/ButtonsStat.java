@@ -1,14 +1,16 @@
+package lixo;
+
 ///*
 // * To change this license header, choose License Headers in Project Properties.
 // * To change this template file, choose Tools | Templates
 // * and open the template in the editor.
 // */
-//package cc.unip.tccfinal;
+//package enums;
 //
 ///**
 // *
-// * @author Moisés
+// * @author MOISES
 // */
-//public class main {
-//    
+//public enum ButtonsStat {
+//    ON, OFF
 //}
