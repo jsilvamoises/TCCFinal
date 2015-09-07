@@ -27,7 +27,7 @@ public class Monitor extends Application {
     public void start(Stage primaryStage) {
         Parent   root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/cc/unip/tccfinal/fxml/Monitor.fxml"));            
+            root = FXMLLoader.load(getClass().getResource("/cc/unip/tccfinal/fxml/Monitoramento.fxml"));            
         } catch (IOException ex) {
             Logger.getLogger(Treino.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -36,7 +36,7 @@ public class Monitor extends Application {
         primaryStage.setOnCloseRequest((WindowEvent event) -> {
             System.exit(0);
         });
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Rede Neural");
         primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
         primaryStage.show();

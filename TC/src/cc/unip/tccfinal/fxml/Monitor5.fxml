@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="763.0" prefWidth="1020.0" stylesheets="@css/treino.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cc.unip.tccfinal.fxml.controller.MonitorController">
+   <top>
+      <ToolBar prefHeight="73.0" prefWidth="1020.0" BorderPane.alignment="CENTER">
+        <items>
+            <ToggleButton fx:id="tbIniciarLeituraPorta" mnemonicParsing="false" prefHeight="58.0" prefWidth="87.0" text="Iniciar Leitura" />
+            <ToggleButton fx:id="tbSalvarDados" mnemonicParsing="false" prefHeight="59.0" prefWidth="89.0" text="Salvar Dados" />
+            <ToggleButton fx:id="tbAutomatico" mnemonicParsing="false" prefHeight="61.0" prefWidth="78.0" text="Automatico" />
+            <Button fx:id="btnTreinar" mnemonicParsing="false" prefHeight="61.0" prefWidth="111.0" text="Treinar" />
+        </items>
+      </ToolBar>
+   </top>
+   <left>
+      <VBox fx:id="boxEsquerdo" prefHeight="690.0" prefWidth="261.0" spacing="2.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="44.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="208.0" minWidth="10.0" prefWidth="158.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="208.0" minWidth="10.0" prefWidth="58.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="25.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="25.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/arcondicionado.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@icons/aquecedor.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../images/teste.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../images/teste.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ar Condicionado" wrappingWidth="137.13671875" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets top="5.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Text layoutX="51.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aquecedor" wrappingWidth="137.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Text layoutX="51.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iluminação" wrappingWidth="137.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Text layoutX="51.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Umidificador" wrappingWidth="137.13671875" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ToggleButton fx:id="tbArcondicionado" mnemonicParsing="false" text="OFF" GridPane.columnIndex="2" />
+                  <ToggleButton fx:id="tbAquecedor" mnemonicParsing="false" text="OFF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ToggleButton fx:id="tbIluminacao" layoutX="206.0" layoutY="57.0" mnemonicParsing="false" text="OFF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <ToggleButton fx:id="tbUmidificador" layoutX="206.0" layoutY="97.0" mnemonicParsing="false" text="OFF" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+            <Separator prefWidth="200.0" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Testar Amostra" />
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="84.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="167.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equipamento" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vlr. Sensor" GridPane.rowIndex="1" />
+                  <Button fx:id="btSubmeter" mnemonicParsing="false" prefHeight="25.0" prefWidth="159.0" text="Submenter" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Text fx:id="lblResultado" strokeType="OUTSIDE" strokeWidth="0.0" text="Res::" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cbEquipamento" prefHeight="25.0" prefWidth="164.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="tfValorSensor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </left>
+   <right>
+      <VBox fx:id="boxDireito" prefHeight="690.0" prefWidth="226.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding></VBox>
+   </right>
+   <center>
+      <VBox fx:id="boxCentro" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <LineChart fx:id="chart" alternativeColumnFillVisible="true" animated="false" title="Sensores">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="yAxis" side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="tcTemperatura" prefWidth="75.0" text="Temperatura" />
+                <TableColumn fx:id="tcLuminosidade" prefWidth="75.0" text="Luminosidade" />
+                  <TableColumn fx:id="tcUmidade" prefWidth="75.0" text="Umidade" />
+                  <TableColumn fx:id="tcStatusAquecedor" prefWidth="75.0" text="ST Aquecedor" />
+                  <TableColumn fx:id="tcStatusArcondicionado" prefWidth="75.0" text="ST Ar Condicionado" />
+                  <TableColumn fx:id="tcStatusIuminacao" prefWidth="75.0" text="ST Ilumincação" />
+                  <TableColumn fx:id="tcStatusUmidificador" prefWidth="75.0" text="ST Umidificador" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

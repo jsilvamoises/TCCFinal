@@ -46,8 +46,7 @@ public class TreinoController implements Initializable {
     private CategoryAxis xAxis;
     @FXML
     private Button btnTreinarRede;
-    @FXML
-    private TextArea textAreaInfo;
+   
     @FXML
     private Label lblNeuroniosEntrada;
     @FXML
