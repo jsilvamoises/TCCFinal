@@ -518,9 +518,9 @@ public class MonitorController implements Initializable {
      */
     private void processarAutomatico() {
         if (estaAutomatico) {
-            if (!itr.isIsTreinada()) {
+            //if (!itr.isIsTreinada()) {
 
-            } else {
+            //} else {
                 sensor = CacheLeitura.getInstance().getUltimoDadoRecebidoSensor();
                 double idSensor[] = {0.1, 0.2, 0.3, 0.4};
                 double valoresColetados[] = {sensor.getLuminosidade() / 100, sensor.getTemperatura() / 100, sensor.getTemperatura() / 100, sensor.getUmidade() / 100};
@@ -529,7 +529,7 @@ public class MonitorController implements Initializable {
                     System.out.println(teste[0] + "," + teste[1] + "," + teste[2]);
                     setEstadoEquipamento(teste, i + 1);
                 }
-            }
+            //}
         }
     }
 
