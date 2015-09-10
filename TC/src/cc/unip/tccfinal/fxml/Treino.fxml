@@ -21,7 +21,7 @@
       </ToolBar>
    </top>
    <left>
-      <VBox fx:id="boxEsquerdo" prefHeight="670.0" prefWidth="180.0" spacing="3.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="boxEsquerdo" spacing="3.0" BorderPane.alignment="CENTER">
          <children>
             <ProgressBar fx:id="progressBar" progress="0.0" />
             <Label fx:id="lblPorcentagemAmostra" text="Porcentagem da Amostra::" />
@@ -53,9 +53,9 @@
       </VBox>
    </left>
    <center>
-      <HBox BorderPane.alignment="CENTER">
+      <HBox>
          <children>
-            <BarChart fx:id="barChart" prefHeight="680.0" prefWidth="302.0">
+            <BarChart fx:id="barChart">
               <xAxis>
                 <CategoryAxis side="BOTTOM" fx:id="xAxis" />
               </xAxis>
@@ -63,8 +63,8 @@
                 <NumberAxis fx:id="yAxis" side="LEFT" />
               </yAxis>
             </BarChart>
-            <PieChart fx:id="pieChart" prefHeight="680.0" prefWidth="315.0" title="Erros / Acertos" />
-            <PieChart fx:id="pieChartAmostras" prefHeight="680.0" prefWidth="340.0" />
+            <PieChart fx:id="pieChart" title="Erros / Acertos" />
+            <PieChart fx:id="pieChartAmostras" />
          </children>
       </HBox>
    </center>
