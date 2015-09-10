@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="827.0" prefWidth="1158.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cc.unip.tccfinal.fxml.controller.TreinoController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cc.unip.tccfinal.fxml.controller.TreinoController">
    <top>
       <ToolBar fx:id="toolBar" BorderPane.alignment="CENTER">
         <items>
@@ -69,6 +69,6 @@
       </HBox>
    </center>
    <bottom>
-      <VBox fx:id="boxInferior" prefHeight="88.0" prefWidth="1158.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="boxInferior" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
