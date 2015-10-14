@@ -15,6 +15,11 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class Sensor implements Serializable {
+    private int dia;
+    private int mes;
+    private int ano;
+    private int hora;
+    private int min;    
     private Date horaAmostra;
     private double temperatura;
     private double umidade;

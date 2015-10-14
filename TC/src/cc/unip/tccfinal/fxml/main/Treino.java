@@ -35,6 +35,7 @@ public class Treino extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setTitle("Treino Rede Neural!");
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
