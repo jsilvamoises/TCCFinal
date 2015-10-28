@@ -1,12 +1,12 @@
 package cc.unip.tccfinal.fxml.rede.objeto;
 
-public class PojoTreino {
+public class TreinoVO {
 
 	private Double entradasUltimaCamada[];
 	private Double[] entradas, gradientes;
 	private Double fatorAdaptacao;
 
-	public PojoTreino(Double[] entradas, Double[] entradasUltimaCamada, Double[] gradientes, Double fatorAdaptacao) {
+	public TreinoVO(Double[] entradas, Double[] entradasUltimaCamada, Double[] gradientes, Double fatorAdaptacao) {
 		this.entradasUltimaCamada = entradasUltimaCamada;
 		this.entradas = entradas;
 		this.gradientes = gradientes;

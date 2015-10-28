@@ -1,6 +1,6 @@
 package cc.unip.tccfinal.fxml.rede.estrutura;
 
-import cc.unip.tccfinal.fxml.rede.objeto.PojoTreino;
+import cc.unip.tccfinal.fxml.rede.objeto.TreinoVO;
 
 
 
@@ -27,11 +27,11 @@ public class Camada {
         return saidas;
     }
 
-    public void retropropagarErro(PojoTreino pojoTreino) {
+    public void retropropagarErro(TreinoVO treinoVO) {
         for (int i = 0; i < neuronios.length; i++) {
             for (int j = 0; j < neuronios[i].conexoes.length; j++) {
-                neuronios[i].conexoes[j] += pojoTreino.getFatorAdaptacao()
-                        * pojoTreino.getEntradas()[j] * pojoTreino.getGradientes()[i];
+                neuronios[i].conexoes[j] += treinoVO.getFatorAdaptacao()
+                        * treinoVO.getEntradas()[j] * treinoVO.getGradientes()[i];
             }
         }
     }

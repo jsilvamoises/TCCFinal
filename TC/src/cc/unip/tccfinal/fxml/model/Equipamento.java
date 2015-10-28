@@ -33,6 +33,13 @@ public class Equipamento implements Serializable {
     private double idEquipamento;
     private byte statusEquipamento;
     private double valorSensorReferencia;
+    
+    private int ano;
+    private int mes;
+    private int dia;
+    
+    private int hora;
+    private int minuto;
 
 //    private int anoAmostra;
 //    private int diaAno;
@@ -189,5 +196,59 @@ public class Equipamento implements Serializable {
     public Long getId() {
         return id;
     }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public Equipamento setAno(int ano) {
+        this.ano = ano;
+        return this;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public Equipamento setMes(int mes) {
+        this.mes = mes;
+        return this;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public Equipamento setDia(int dia) {
+        this.dia = dia;
+        return this;
+    }
+
+    public int getHora() {
+        return hora;
+    }
+
+    public Equipamento setHora(int hora) {
+        this.hora = hora;
+        return this;
+    }
+
+    public int getMinuto() {
+        return minuto;
+    }
+
+    public Equipamento setMinuto(int minuto) {
+        this.minuto = minuto;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Equipamento{" + "id=" + id + ", dataAmostra=" + dataAmostra + ", idEquipamento=" + idEquipamento + ", statusEquipamento=" + statusEquipamento + ", valorSensorReferencia=" + valorSensorReferencia + ", ano=" + ano + ", mes=" + mes + ", dia=" + dia + ", hora=" + hora + ", minuto=" + minuto + ", nomeEquipamento=" + nomeEquipamento + '}';
+    }
+    
+    
+    
+    
 
 }

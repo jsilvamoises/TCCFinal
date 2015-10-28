@@ -15,6 +15,7 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class Sensor implements Serializable {
+    private double idEquipamento;
     private int dia;
     private int mes;
     private int ano;
@@ -33,7 +34,6 @@ public class Sensor implements Serializable {
     
   
     
-
     public Date getHoraAmostra() {
         return horaAmostra;
     }
@@ -124,10 +124,61 @@ public class Sensor implements Serializable {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "Sensor{" + "horaAmostra=" + horaAmostra + ", temperatura=" + temperatura + ", umidade=" + umidade + ", luminosidade=" + luminosidade + ", statusIluminacao=" + statusIluminacao + ", statusAquecedor=" + statusAquecedor + ", statusArcondicionado=" + statusArcondicionado + ", statusUmidificador=" + statusUmidificador + ", statusGeral=" + statusGeral + '}';
+    public double getIdEquipamento() {
+        return idEquipamento;
     }
+
+    public Sensor setIdEquipamento(double idEquipamento) {
+        this.idEquipamento = idEquipamento;
+         return this;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public Sensor setDia(int dia) {
+        this.dia = dia;
+         return this;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public Sensor setMes(int mes) {
+        this.mes = mes;
+         return this;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public Sensor setAno(int ano) {
+        this.ano = ano;
+         return this;
+    }
+
+    public int getHora() {
+        return hora;
+    }
+
+    public Sensor setHora(int hora) {
+        this.hora = hora;
+         return this;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public Sensor setMin(int min) {
+        this.min = min;
+        return this;
+    }
+
+    
     
     
      

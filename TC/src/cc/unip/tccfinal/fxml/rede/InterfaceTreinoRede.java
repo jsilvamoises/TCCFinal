@@ -25,7 +25,7 @@ public class InterfaceTreinoRede {
     private int porcentTreino = 30;
     private int nrNeuroniosPrimeiraCamada = 3;
     private int nrNeuroniosEntrada = 3;
-    private RedeNeuralMLP rede;
+    private RMLP rede;
     private double taxaAprendizado = 0.30, erroMinimo = 0.03;
     private int numeroMaximoEpocas = 10000000;
     private int epocas = 0;
@@ -43,7 +43,7 @@ public class InterfaceTreinoRede {
   //  DadosRepository tr;
 
     private InterfaceTreinoRede() {
-        rede = new RedeNeuralMLP(nrNeuroniosPrimeiraCamada, nrNeuroniosEntrada);
+        rede = new RMLP(nrNeuroniosPrimeiraCamada, nrNeuroniosEntrada);
         tr = new ObterDadosTreino().setPorcentagemParaTreinamento(porcentTreino).build();
        
     }

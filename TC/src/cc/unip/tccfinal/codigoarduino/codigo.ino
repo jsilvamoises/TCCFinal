@@ -35,12 +35,12 @@ void loop() {
 
   //GERA UMA STRING NO FORMATO JSON
   // if ((millis() % 1000) == 0) {
+  /** ESCREVE NA PORTA APENAS DEPOIS DE 1 SEGUNDO DA ÚLTIMA ESCRITA*/
   if ((millis() - valorUltimaEscritaNaPorta) >= intervaloEscritaNaPorta) {
-
-
-    /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-       @     LÊ OS DADOS VINDOS DOS PINOS                @
-     /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+  
+    /*#################################################################################################
+    *######################### LÊ OS DADOS VINDOS DOS PINOS ###########################################
+    *###############################################################################################*/
     // Imprime dados da temperatura
     Serial.print("{temperatura: ");
     Serial.print(temperatura());
@@ -57,9 +57,10 @@ void loop() {
     Serial.print("identificador: ");
     Serial.print("AMB-01");
     Serial.print(", ");
-    /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-      @     ATIVA / DESTATIVA SENSORES NO ARDUINO       @
-    /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+ 
+    /*#################################################################################################
+    *######################### IMPRIME STATUS DOS EQUIPAMENTOS NA SERIAL ##############################
+    *###############################################################################################*/
     // imprime o estado do alarme de magnetismo
     Serial.print("statusIluminacao: ");
     Serial.print(digitalRead(ILUMINACAO));
@@ -86,13 +87,12 @@ void loop() {
     Serial.flush();
   }
 
-
-
-
-
 }
 
 
+/*#################################################################################################
+ *############ RETORNA 1 CASO EXISTA ALGUM EQUIPAMENTO LIGADO, 0 CASO CONTRÁRIO ###################
+ *###############################################################################################*/
 byte statusGeral(byte a, byte b, byte c, byte d) {
   if (a == 1 || b == 1 || c == 1 || d == 1) {
     return 1;
@@ -102,6 +102,9 @@ byte statusGeral(byte a, byte b, byte c, byte d) {
 }
 
 
+/*#################################################################################################
+ *############ REALIZA LEITURA DA PORTA SERIAL PARA ATIVAR / DESATIVAR EQUIPAMENTOS ###############
+ *###############################################################################################*/
 void lerComandosRecebidos() {
   if (Serial.available() > 0) { //verifica se existe comunicação com a porta serial
     dado = Serial.read();

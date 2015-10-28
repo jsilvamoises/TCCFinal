@@ -59,6 +59,7 @@ public class ObterDadosTreino {
     }
 
     // -------------------------------------------------------------------------
+    @Deprecated
     private ObterDadosTreino separarAmostraParaTreinamento() {
         listaKey = controller.listKeyEquipamento();
         Double teste, teste1;
@@ -137,7 +138,7 @@ public class ObterDadosTreino {
         gerarMatrizTransposta();
         return this;
     }
-
+    @Deprecated
     public void gerarMatrizTransposta() {
 
         // E.id.idEquipamento, E.id.valorSensorReferencia/100 ,E.id.statusEquipamento

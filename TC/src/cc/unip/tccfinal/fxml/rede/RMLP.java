@@ -3,7 +3,7 @@ package cc.unip.tccfinal.fxml.rede;
 import java.util.Arrays;
 import javafx.scene.control.TextArea;
 
-public class RedeNeuralMLP {
+public class RMLP {
 
     private double fatorAdaptacao = 0.30;
     private double erroMinimo = 0.03;
@@ -18,7 +18,7 @@ public class RedeNeuralMLP {
     private TextArea prompt = new TextArea();
     
 
-    public RedeNeuralMLP(int nrNeuroniosPrimeiraCamada, int nrNeuroniosEntrada) {
+    public RMLP(int nrNeuroniosPrimeiraCamada, int nrNeuroniosEntrada) {
         this.nrNeuroniosPrimeiraCamada = nrNeuroniosPrimeiraCamada;
         this.nrNeuroniosEntrada = nrNeuroniosEntrada;
         this.inicializarConexoesSinapticasDaRede();
@@ -200,7 +200,7 @@ public class RedeNeuralMLP {
         return fatorAdaptacao;
     }
 
-    public RedeNeuralMLP setFatorAdaptacao(double fatorAdaptacao) {
+    public RMLP setFatorAdaptacao(double fatorAdaptacao) {
         this.fatorAdaptacao = fatorAdaptacao;
         return this;
     }
@@ -209,7 +209,7 @@ public class RedeNeuralMLP {
         return erroMinimo;
     }
 
-    public RedeNeuralMLP setErroMinimo(double erroMinimo) {
+    public RMLP setErroMinimo(double erroMinimo) {
         this.erroMinimo = erroMinimo;
         return this;
     }
@@ -218,7 +218,7 @@ public class RedeNeuralMLP {
         return nrNeuroniosPrimeiraCamada;
     }
 
-    public RedeNeuralMLP setNrNeuroniosPrimeiraCamada(int nrNeuroniosPrimeiraCamada) {
+    public RMLP setNrNeuroniosPrimeiraCamada(int nrNeuroniosPrimeiraCamada) {
         this.nrNeuroniosPrimeiraCamada = nrNeuroniosPrimeiraCamada;
         return this;
     }
@@ -227,7 +227,7 @@ public class RedeNeuralMLP {
         return nrNeuroniosEntrada;
     }
 
-    public RedeNeuralMLP setNrNeuroniosEntrada(int nrNeuroniosEntrada) {
+    public RMLP setNrNeuroniosEntrada(int nrNeuroniosEntrada) {
         this.nrNeuroniosEntrada = nrNeuroniosEntrada;
         return this;
     }
@@ -240,7 +240,7 @@ public class RedeNeuralMLP {
         return numeroMaximoEpocas;
     }
 
-    public RedeNeuralMLP setNumeroMaximoEpocas(int numeroMaximoEpocas) {
+    public RMLP setNumeroMaximoEpocas(int numeroMaximoEpocas) {
         this.numeroMaximoEpocas = numeroMaximoEpocas;
         return this;
     }

@@ -71,8 +71,8 @@ public class GSONConverter {
     }
 
     private void despachar(Sensor sensor) {
-        
-        CacheLeitura.getInstance().processar(sensor);
+        CacheLeitura.getInstance().processar2(sensor);
+        //CacheLeitura.getInstance().processar(sensor);
         
     }
 

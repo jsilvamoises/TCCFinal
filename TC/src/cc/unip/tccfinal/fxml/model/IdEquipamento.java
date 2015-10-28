@@ -10,8 +10,8 @@ package cc.unip.tccfinal.fxml.model;
  * @author Moisés
  */
 public class IdEquipamento {
-    public static double ID_ILUMINACAO = 0.100;
-    public static double ID_AR_CONDICIONADO = 0.200;
-    public static double ID_AQUECEDOR = 0.300;
-    public static double ID_UMIDIFICADOR = 0.400;
+    public static final double ID_ILUMINACAO = 0.100;
+    public static final double ID_AR_CONDICIONADO = 0.200;
+    public static final double ID_AQUECEDOR = 0.300;
+    public static final  double ID_UMIDIFICADOR = 0.400;
 }

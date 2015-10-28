@@ -1,6 +1,6 @@
 package cc.unip.tccfinal.fxml.rede.estrutura;
 
-import cc.unip.tccfinal.fxml.rede.objeto.PojoTreino;
+import cc.unip.tccfinal.fxml.rede.objeto.TreinoVO;
 
 
 
@@ -16,7 +16,9 @@ public class CamadaIntermediaria extends Camada {
 	}
 
 	@Override
-	public void retropropagarErro(PojoTreino pojoTreino) {
+	public void retropropagarErro(TreinoVO pojoTreino) {
+            
+            
 		/*Double entradasUltimaCamada[] = pojoTreino.getEntradasUltimaCamada();
 
 		for (int j = 0; j < entradasUltimaCamada.length; j++) {
