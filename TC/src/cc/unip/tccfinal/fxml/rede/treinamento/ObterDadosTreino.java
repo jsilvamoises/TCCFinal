@@ -10,7 +10,6 @@ import cc.unip.tccfinal.fxml.controller.EquipamentoController;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -23,9 +22,10 @@ public class ObterDadosTreino {
     private List<Object[]> objetos = new ArrayList<>();
     private final List<Object[]> objetosParaTreinamento = new ArrayList<>();
     private double porcentagemParaTreinamento = 30.0;
+    private List<Object[]> geral = new ArrayList<>();
 
     private DecimalFormat formato = new DecimalFormat("#0.000");
-    private double MATRIZ_DADOS[][];
+    private double MATRIZ_DADOS[][]=null;
     private double MATRIZ_TESTES[][];
     private double RESULTADO_ESPERADO[];
     private double RESULTADO_ESPERADO_TESTE[];
@@ -43,7 +43,10 @@ public class ObterDadosTreino {
 
     // -------------------------------------------------------------------------
     private ObterDadosTreino obterDadosBanco() {
-        objetos = controller.listaParaTreinamento();
+        if(geral.size()<1){
+            geral = controller.listaParaTreinamento(); 
+        }
+        objetos = geral;    
         return this;
     }
 
@@ -132,8 +135,10 @@ public class ObterDadosTreino {
      *
      * @return
      */
-    public ObterDadosTreino build() {
-        obterDadosBanco();
+    public ObterDadosTreino build() {        
+            obterDadosBanco();
+       
+        
         separarAmostraParaTreinamento();
         gerarMatrizTransposta();
         return this;
@@ -188,6 +193,11 @@ public class ObterDadosTreino {
 
     public List<Object[]> getObjetosParaTreinamento() {
         return objetosParaTreinamento;
+    }
+
+    public void adcionarParaMatrizDados(int i) {       
+        objetosParaTreinamento.add(objetos.remove(i));
+        gerarMatrizTransposta();
     }
 
 }

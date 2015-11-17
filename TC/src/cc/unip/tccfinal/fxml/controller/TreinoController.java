@@ -7,12 +7,14 @@ package cc.unip.tccfinal.fxml.controller;
 
 //import cc.unip.tccfinal.controller.view.treino.DadosGraficoErrAce;
 import cc.unip.tccfinal.fxml.auxiliar.DadosGraficoBarras;
+import cc.unip.tccfinal.fxml.main.Menu;
 import cc.unip.tccfinal.fxml.model.DadosGraficoErrAce;
 import cc.unip.tccfinal.fxml.rede.InterfaceTreinoRede;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +28,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
@@ -33,6 +36,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -40,6 +44,8 @@ import javafx.scene.layout.VBox;
  * @author Moisés
  */
 public class TreinoController implements Initializable {
+
+    
 
     // VARIAVEIS FXML
     @FXML
@@ -88,7 +94,14 @@ public class TreinoController implements Initializable {
     @FXML
     private VBox boxEsquerdo;
     @FXML
-    private Label lblNeuroniosSegundaCamada;
+    private Label lblNeuroniosSegundaCamada;    
+    @FXML
+    private  CheckBox cbAprenderComErros;
+    
+     @FXML
+    private Button btnGerarDados;
+    private static boolean aprenderComErro;
+    
     
     private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     private List<DadosGraficoErrAce> dados = new ArrayList<>();
@@ -107,6 +120,10 @@ public class TreinoController implements Initializable {
         configToolbar();// Configura os itens da Toolbar
         btnRestaurarPadrao.setOnAction((ActionEvent event) -> {
             setDefaultValues();
+        });
+        
+        btnGerarDados.setOnAction((ActionEvent event)->{
+            new Menu().start(new Stage());
         });
         
         pieChartAmostras.setTitle("Amostras X Treino");
@@ -159,6 +176,14 @@ public class TreinoController implements Initializable {
         sliderPorcentagemAmostra.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             qtdPorcentagemAmostra = newValue.intValue();
             updateLabel();
+        });
+        
+        cbAprenderComErros.selectedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                aprenderComErro = newValue;
+            }
         });
         setDefaultValues();//Aplica valores padrão para o slider
         configSlider(sliderErroMinimo, sliderFatorAdaptacao, sliderNeuroniosEntrada, sliderNeuroniosSegundaCamada, sliderNumeroMaximoEpoca, sliderPorcentagemAmostra);
@@ -294,5 +319,10 @@ public class TreinoController implements Initializable {
         PieChart.Data amostraTestada = new PieChart.Data("Amostras Testadas [ "+ iTreino.getListaVerificacaoSize()+" ]", iTreino.getListaVerificacaoSize());
         
        pieChartAmostras.getData().addAll(amostraTreino,amostraTestada);
+    }
+    
+    
+    public static boolean aprenderComErros(){        
+        return aprenderComErro;
     }
 }

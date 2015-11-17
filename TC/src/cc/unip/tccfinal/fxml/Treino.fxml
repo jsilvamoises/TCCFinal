@@ -13,7 +13,9 @@
    <top>
       <ToolBar fx:id="toolBar" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="btnTreinarRede" mnemonicParsing="false" prefHeight="59.0" prefWidth="211.0" text="Treinar Rede" />
+          <Button fx:id="btnTreinarRede" mnemonicParsing="false" prefHeight="31.0" prefWidth="211.0" text="Treinar Rede" />
+            <CheckBox fx:id="cbAprenderComErros" mnemonicParsing="false" text="Aprender com erros" />
+            <Button fx:id="btnGerarDados" mnemonicParsing="false" text="Gerar dados" />
         </items>
          <padding>
             <Insets left="15.0" />

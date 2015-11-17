@@ -49,6 +49,7 @@ import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -115,6 +116,7 @@ public class MonitorController implements Initializable {
     private TableColumn<String, Number> tcUmidade;
     @FXML
     private Button btnTreinar;
+    
     // ========================================================================
     private boolean estaLendoPorta, estaAutomatico, estaSalvandoNoBanco, estaOnAquecedor, estaOnArcondicionado, estaOnIluminacao, estaOnUmidificado;
     private Arduino arduino;
@@ -516,20 +518,25 @@ public class MonitorController implements Initializable {
     /**
      * Inicia o processamento automático
      */
-    private void processarAutomatico() {
-        if (estaAutomatico) {
-            //if (!itr.isIsTreinada()) {
-
-            //} else {
+    private void processarAutomatico() {        
+        if (estaAutomatico) {            
                 sensor = CacheLeitura.getInstance().getUltimoDadoRecebidoSensor();
+                //Vetor com id dos equipamentos
                 double idSensor[] = {0.1, 0.2, 0.3, 0.4};
-                double valoresColetados[] = {sensor.getLuminosidade() / 100, sensor.getTemperatura() / 100, sensor.getTemperatura() / 100, sensor.getUmidade() / 100};
+                /*Sequencia dos valores dos sensores que correspodem ao índece
+                do vetor idSensor[]*/
+                double valoresColetados[] = {
+                    sensor.getLuminosidade() / 100, 
+                    sensor.getTemperatura() / 100, 
+                    sensor.getTemperatura() / 100, 
+                    sensor.getUmidade() / 100};
+                
                 for (int i = 0; i < 4; i++) {
-                    double teste[] = {idSensor[i], valoresColetados[i], BIAS};
-                    System.out.println(teste[0] + "," + teste[1] + "," + teste[2]);
-                    setEstadoEquipamento(teste, i + 1);
+                    double res[] = {idSensor[i], valoresColetados[i], BIAS};
+                    System.out.println(res[0] + "," + res[1] + "," + res[2]);
+                    setEstadoEquipamento(res, i + 1);
                 }
-            //}
+            
         }
     }
 

@@ -6,6 +6,7 @@
 package cc.unip.tccfinal.fxml.rede;
 
 import cc.unip.tccfinal.fxml.auxiliar.DadosGraficoBarras;
+import cc.unip.tccfinal.fxml.controller.TreinoController;
 import cc.unip.tccfinal.fxml.dados.DadosRepository;
 import cc.unip.tccfinal.fxml.rede.treinamento.ObterDadosTreino;
 import java.util.ArrayList;
@@ -40,29 +41,30 @@ public class InterfaceTreinoRede {
         return instance == null ? instance = new InterfaceTreinoRede() : instance;
     }
     ObterDadosTreino tr;
-  //  DadosRepository tr;
+    //  DadosRepository tr;
 
     private InterfaceTreinoRede() {
         rede = new RMLP(nrNeuroniosPrimeiraCamada, nrNeuroniosEntrada);
-        tr = new ObterDadosTreino().setPorcentagemParaTreinamento(porcentTreino).build();
-       
+        //tr = new ObterDadosTreino().setPorcentagemParaTreinamento(porcentTreino).build();
+
     }
     /*#########################################################################
      ##########  RECUPERA DODOS DO BANCO E RETORNA CONJUNTO TREINO #############
      #########################################################################*/
 
     public InterfaceTreinoRede prepararDados() {
-        /*
-       tr = new DadosRepository();
-        tr.setPorcentagemParaTreinamento(porcentTreino);
-        tr.processar();
-        CONJUNTO_TREINAMENTO = tr.getMatrizTreinamento();
-        VALORES_ESPERADOS = tr.getResultadoEsperado();
-        listaTreinoSize = tr.getTamanhoListraTreino();
-        listaVerificacaoSize = tr.getListaParaTeste().size();*/
-        
-        
         tr = new ObterDadosTreino().setPorcentagemParaTreinamento(porcentTreino).build();
+       ///tr = new DadosRepository();
+       //  tr.setPorcentagemParaTreinamento(porcentTreino).build();
+        /// tr.processar();
+        CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
+        VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
+        objetosParaTeste = tr.getObjetos();// Retorna os objetos restantes que não foram para treino
+        ///listaTreinoSize = tr.getTamanhoListraTreino();
+        ///listaVerificacaoSize = tr.getListaParaTeste().size();*/
+
+       
+        
         CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
         VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
         listaTreinoSize = tr.getObjetosParaTreinamento().size();
@@ -79,7 +81,7 @@ public class InterfaceTreinoRede {
     // --------------- TREINA A REDE COM OS DADOS OBTIDO DO BANCO --------------
     public void treinar() {
         dadosGraficoBarras.clear();
-
+        
         // ------------------------------------------------------------------------------------------
         rede.setNrNeuroniosEntrada(nrNeuroniosEntrada);
         rede.setNrNeuroniosPrimeiraCamada(nrNeuroniosPrimeiraCamada);
@@ -93,32 +95,35 @@ public class InterfaceTreinoRede {
         // } else {
         //rede.treinar(CONJUNTO_TREINAMENTO, VALORES_ESPERADOS);
        /* if (porcentTreino > 70 || porcentTreino < 30) {
-            porcentTreino = 35;
-        }*/
+         porcentTreino = 35;
+         }*/
+        
         System.out.println("Porcentagem Treino Atual " + porcentTreino);
         int key = 0;
-       // do {
-            prepararDados();//Obtem amostra 
-            System.out.println("#######################################################################");
-            System.out.println("Porcentagem de Treino                 :: " + porcentTreino);
-            System.out.println("Total de neuronios entrada            :: " + nrNeuroniosEntrada);
-            System.out.println("Total de neuronios primeira camada    :: " + nrNeuroniosPrimeiraCamada);
-            System.out.println("Taxa de aprendizado                   :: " + taxaAprendizado);
-            System.out.println("Erro Mínimo                           :: " + erroMinimo);
-            System.out.println("Numero Máximo de épocas               :: " + numeroMaximoEpocas);
-            //System.out.println("Total de objetos pra treino           :: " + tr.getObjetosParaTreinamento().size());
-            System.out.println("#######################################################################");
-            
-            
-            porcentTreino = porcentTreino + Math.round(erroClassificacao);
-            erroClassificacao = 0;
-            acertoClassificacao = 0;
-            System.out.println("Porcentagem de treino ajustado para:: " + porcentTreino);
-            rede.treinar(tr.getMATRIZ_DADOS(), tr.getRESULTADO_ESPERADO());
-           //  rede.treinar(tr.getMatrizTreinamento(), tr.getResultadoEsperado());
-            this.analisarAmostras();
-            dadosGraficoBarras.add(new DadosGraficoBarras(++key, acertoClassificacao, erroClassificacao));
-       // } while (erroClassificacao > 0 && porcentTreino < 100);
+        // do {
+        prepararDados();//Obtem amostra 
+        System.out.println("#######################################################################");
+        System.out.println("Porcentagem de Treino                 :: " + porcentTreino);
+        System.out.println("Total de neuronios entrada            :: " + nrNeuroniosEntrada);
+        System.out.println("Total de neuronios primeira camada    :: " + nrNeuroniosPrimeiraCamada);
+        System.out.println("Taxa de aprendizado                   :: " + taxaAprendizado);
+        System.out.println("Erro Mínimo                           :: " + erroMinimo);
+        System.out.println("Numero Máximo de épocas               :: " + numeroMaximoEpocas);
+        //System.out.println("Total de objetos pra treino           :: " + tr.getObjetosParaTreinamento().size());
+        System.out.println("#######################################################################");
+
+        // porcentTreino = porcentTreino + Math.round(erroClassificacao);
+        erroClassificacao = 0;
+        acertoClassificacao = 0;
+        System.out.println("Porcentagem de treino ajustado para:: " + porcentTreino);
+            ///rede.treinar(tr.getMATRIZ_DADOS(), tr.getRESULTADO_ESPERADO());
+
+        rede.treinar(CONJUNTO_TREINAMENTO, VALORES_ESPERADOS);
+
+        //  rede.treinar(tr.getMatrizTreinamento(), tr.getResultadoEsperado());
+        this.analisarAmostras();
+        dadosGraficoBarras.add(new DadosGraficoBarras(++key, acertoClassificacao, erroClassificacao));
+        // } while (erroClassificacao > 0 && porcentTreino < 100);
         isTreinada = true;
         // }
     }
@@ -192,12 +197,17 @@ public class InterfaceTreinoRede {
         for (int i = 0; i < objetosParaTeste.size(); i++) {
             Object[] obj = objetosParaTeste.get(i);
             // PARAMETRO 0 = ID EQUIPANETO | PARAMENTRO 1 = VALOR DO SENSOR REFERENCIA | PARAMETRO 2 BIAS
+            double[] objeto = {};
             res = rede.classificar(new double[]{Double.valueOf(obj[1].toString()), Double.valueOf(obj[2].toString()), BIAS});
 
             if (res == Integer.valueOf(obj[3].toString())) {
                 acertoClassificacao++;
             } else {
                 erroClassificacao++;
+                //Caso 
+                if (TreinoController.aprenderComErros()) {
+                    this.treinar();
+                }
             }
 //            System.out.println("Indice 0:: "+obj[0]);//chave
 //            System.out.println("Indice 1:: "+obj[1]);// id equipamento

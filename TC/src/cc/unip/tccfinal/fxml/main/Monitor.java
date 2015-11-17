@@ -38,7 +38,7 @@ public class Monitor extends Application {
         });
         primaryStage.setTitle("Rede Neural");
         primaryStage.setMaximized(true);
-        primaryStage.setFullScreen(true);
+       // primaryStage.setFullScreen(true);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

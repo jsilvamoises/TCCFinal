@@ -49,7 +49,7 @@ public class EquipamentoController {
         }
 
     }
-    @Deprecated
+    
     public List<Object[]> listaParaTreinamento() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
@@ -68,7 +68,7 @@ public class EquipamentoController {
         }
     }
     
-    @Deprecated
+    
     public List<Object[]> listaParaTreinamento2() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
@@ -124,6 +124,22 @@ public class EquipamentoController {
             session.getTransaction().commit();
         }
         
+    }
+    
+    public int deleteAll(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        int totalReg = 0;
+        try {
+            Query query = session.createQuery("DELETE FROM Equipamento E");
+            totalReg = query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            e.printStackTrace();
+           
+        }
+        return totalReg;
     }
     
     

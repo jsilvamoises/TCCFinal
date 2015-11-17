@@ -53,7 +53,7 @@ public class RMLP {
 
     public int classificar(double[] entrada) {
         double y = 0;
-        if (epocas > 9999999) {
+        if (epocas > numeroMaximoEpocas) {
             System.out.println("Nao foi possivel atingir um ponto de convergencia, verifique os parametros e a estrutura da rede.");
         } else {
             // System.out.printf("Treinamento realizado em %s epocas. \n", epocas);

@@ -11,6 +11,10 @@ import cc.unip.tccfinal.fxml.model.IdEquipamento;
 import cc.unip.tccfinal.fxml.model.Sensor;
 import java.util.Calendar;
 import java.util.Random;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 
 /**
  *
@@ -22,11 +26,7 @@ public class GeradorDeAmostras {
     private static final int SENSOR_UMIDADE = 1;
     private static final int SENSOR_LUMINOSIDADE = 2;
 
-    private int totalAmostra = 0;
-
-    public GeradorDeAmostras(int totalAmostra) {
-        this.totalAmostra = totalAmostra;
-    }
+    public int totalAmostra = 0;   
 
     //AR CONDICIONADO
     private static final int MIN_AR_ON = 36;
@@ -50,6 +50,23 @@ public class GeradorDeAmostras {
     private static final int MAX_ILU_OFF = 80;
 
     protected static Random random = new Random();
+    
+    private  ProgressBar progress;
+    
+    public static  double porcentagemConclusao;
+    public static boolean concluido= false;
+    
+    public  GeradorDeAmostras(int totalAmostra) {
+        this.totalAmostra = totalAmostra;
+    }
+    
+    public GeradorDeAmostras(int totalAmostra, ProgressBar progress) {
+        this.totalAmostra = totalAmostra;
+        this.progress = progress;
+        this.progress.setVisible(true);
+       
+        
+    }
 
     public static double randomInRange(double min, double max) {
         double range = max - min;
@@ -57,17 +74,52 @@ public class GeradorDeAmostras {
         double shifted = scaled + min;
         return shifted; // == (rand.nextDouble() * (max-min)) + min;
     }
+    
+    
+    
 
     public static void main(String[] args) {
-        
-            new GeradorDeAmostras(100).gerarAmostras();
-        
-
+            System.gc();
+            new GeradorDeAmostras(1000).gerarAmostras();
+            
+            System.gc();
+ 
         System.exit(0);
+    }
+    
+    private void atualizarProgress(){
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while(!concluido){
+                    try {
+                        Thread.sleep(1);
+                    } catch (Exception e) {
+                    }
+                    Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setProgress(porcentagemConclusao);
+                         System.out.println(porcentagemConclusao);
+                    }
+                });
+                }
+                
+               
+               
+            }
+        }).start();
     }
 
     public void gerarAmostras() {
+        concluido = false;
+        porcentagemConclusao = 0;
+        ///atualizarProgress();
         for (int i = 0; i < totalAmostra; i++) {
+            
+            porcentagemConclusao = (Double.parseDouble(String.valueOf(i))/Double.parseDouble(String.valueOf(totalAmostra)));
+            
             Sensor aquecedorOn = getSensor(IdEquipamento.ID_AQUECEDOR, 1);
             Sensor aquecedorOff = getSensor(IdEquipamento.ID_AQUECEDOR, 0);
 
@@ -131,6 +183,16 @@ public class GeradorDeAmostras {
 
            
         }
+        
+        concluido = true;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                new Alert(Alert.AlertType.INFORMATION, "Concluído!!!!").showAndWait();
+            }
+        });
+        
+                
     }
 
     public Equipamento sensorToEquipamento(Sensor sensor) {
