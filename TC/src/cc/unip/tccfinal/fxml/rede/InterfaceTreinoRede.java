@@ -7,7 +7,6 @@ package cc.unip.tccfinal.fxml.rede;
 
 import cc.unip.tccfinal.fxml.auxiliar.DadosGraficoBarras;
 import cc.unip.tccfinal.fxml.controller.TreinoController;
-import cc.unip.tccfinal.fxml.dados.DadosRepository;
 import cc.unip.tccfinal.fxml.rede.treinamento.ObterDadosTreino;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class InterfaceTreinoRede {
     private List<Object[]> objetosParaTeste = new ArrayList<>();
     private double[][] CONJUNTO_TREINAMENTO;
     private double[] VALORES_ESPERADOS;
-    private int porcentTreino = 30;
+    private int porcentTreino = 70;
     private int nrNeuroniosPrimeiraCamada = 3;
     private int nrNeuroniosEntrada = 3;
     private RMLP rede;
@@ -118,13 +117,16 @@ public class InterfaceTreinoRede {
         System.out.println("Porcentagem de treino ajustado para:: " + porcentTreino);
             ///rede.treinar(tr.getMATRIZ_DADOS(), tr.getRESULTADO_ESPERADO());
 
-        rede.treinar(CONJUNTO_TREINAMENTO, VALORES_ESPERADOS);
+        //rede.treinar(CONJUNTO_TREINAMENTO, VALORES_ESPERADOS);
+        
+        rede.treinar(tr.getMATRIZ_DADOS(), tr.getRESULTADO_ESPERADO());
 
         //  rede.treinar(tr.getMatrizTreinamento(), tr.getResultadoEsperado());
         this.analisarAmostras();
         dadosGraficoBarras.add(new DadosGraficoBarras(++key, acertoClassificacao, erroClassificacao));
         // } while (erroClassificacao > 0 && porcentTreino < 100);
         isTreinada = true;
+        System.gc();
         // }
     }
 

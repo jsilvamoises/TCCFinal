@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mariadb://localhost:3307/REDES_NEURAIS?createDatabaseIfNotExist=true</property>
-    <property name="hibernate.connection.username">tcc_unip</property>
-    <property name="hibernate.connection.password">123456</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+    <property name="hibernate.connection.url">jdbc:hsqldb:file:C:\Users\Moisés\Dropbox\Unip\7º Semestre\db_aps</property>
+    <property name="hibernate.connection.username">sa</property>
+    <property name="hibernate.connection.password"></property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.show_sql">true</property>

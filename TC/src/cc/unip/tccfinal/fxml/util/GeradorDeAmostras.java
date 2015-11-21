@@ -29,25 +29,25 @@ public class GeradorDeAmostras {
     public int totalAmostra = 0;   
 
     //AR CONDICIONADO
-    private static final int MIN_AR_ON = 36;
+    private static final int MIN_AR_ON = 30;
     private static final int MAX_AR_ON = 45;
     private static final int MIN_AR_OFF = 10;
-    private static final int MAX_AR_OFF = 22;
+    private static final int MAX_AR_OFF = 28;
     //AQUECEDOR
-    private static final int MIN_AQ_ON = 10;
-    private static final int MAX_AQ_ON = 21;
-    private static final int MIN_AQ_OFF = 25;
-    private static final int MAX_AQ_OFF = 40;
+    private static final int MIN_AQ_ON = 1;
+    private static final int MAX_AQ_ON = 18;
+    private static final int MIN_AQ_OFF = 20;
+    private static final int MAX_AQ_OFF = 50;
     //AR UMIDIFICADOR
     private static final int MIN_UMI_ON = 30;
     private static final int MAX_UMI_ON = 50;
     private static final int MIN_UMI_OFF = 60;
     private static final int MAX_UMI_OFF = 80;
     //ILUMINACAO
-    private static final int MIN_ILU_ON = 10;
-    private static final int MAX_ILU_ON = 55;
-    private static final int MIN_ILU_OFF = 60;
-    private static final int MAX_ILU_OFF = 80;
+    private static final int MIN_ILU_ON = 0;
+    private static final int MAX_ILU_ON = 17;
+    private static final int MIN_ILU_OFF = 20;
+    private static final int MAX_ILU_OFF = 100;
 
     protected static Random random = new Random();
     
