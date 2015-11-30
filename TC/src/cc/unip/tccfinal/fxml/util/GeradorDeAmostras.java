@@ -22,17 +22,14 @@ import javafx.scene.control.ProgressIndicator;
  */
 public class GeradorDeAmostras {
 
-    private static final int SENSOR_TEMPERATURA = 0;
-    private static final int SENSOR_UMIDADE = 1;
-    private static final int SENSOR_LUMINOSIDADE = 2;
 
     public int totalAmostra = 0;   
 
     //AR CONDICIONADO
-    private static final int MIN_AR_ON = 30;
-    private static final int MAX_AR_ON = 45;
-    private static final int MIN_AR_OFF = 10;
-    private static final int MAX_AR_OFF = 28;
+    private static final int MIN_AR_ON = 25;
+    private static final int MAX_AR_ON = 50;
+    private static final int MIN_AR_OFF = 1;
+    private static final int MAX_AR_OFF = 19;
     //AQUECEDOR
     private static final int MIN_AQ_ON = 1;
     private static final int MAX_AQ_ON = 18;
@@ -40,9 +37,9 @@ public class GeradorDeAmostras {
     private static final int MAX_AQ_OFF = 50;
     //AR UMIDIFICADOR
     private static final int MIN_UMI_ON = 30;
-    private static final int MAX_UMI_ON = 50;
+    private static final int MAX_UMI_ON = 50;//*
     private static final int MIN_UMI_OFF = 60;
-    private static final int MAX_UMI_OFF = 80;
+    private static final int MAX_UMI_OFF = 100;
     //ILUMINACAO
     private static final int MIN_ILU_ON = 0;
     private static final int MAX_ILU_ON = 17;
@@ -116,6 +113,7 @@ public class GeradorDeAmostras {
         concluido = false;
         porcentagemConclusao = 0;
         ///atualizarProgress();
+        
         for (int i = 0; i < totalAmostra; i++) {
             
             porcentagemConclusao = (Double.parseDouble(String.valueOf(i))/Double.parseDouble(String.valueOf(totalAmostra)));
@@ -133,39 +131,51 @@ public class GeradorDeAmostras {
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_AQUECEDOR).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_AQUECEDOR))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_AQ_OFF, MAX_AQ_OFF))).setValorSensorReferencia(randomInRange(MIN_AQ_OFF, MAX_AQ_OFF)));
+                    //.setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_AQ_OFF, MAX_AQ_OFF)))
+                    .setStatusEquipamento(new Byte("0"))
+                    .setValorSensorReferencia(randomInRange(MIN_AQ_OFF, MAX_AQ_OFF)));
             //Aquecedor Ligado
              new EquipamentoController().save(new Equipamento().setAno(
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_AQUECEDOR).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_AQUECEDOR))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_AQ_ON, MAX_AQ_ON))).setValorSensorReferencia(randomInRange(MIN_AQ_ON, MAX_AQ_ON)));
+                    //.setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_AQ_ON, MAX_AQ_ON)))
+                     .setStatusEquipamento(new Byte("1"))
+                     .setValorSensorReferencia(randomInRange(MIN_AQ_ON, MAX_AQ_ON)));
              
              //Ar condicionado desligado
             new EquipamentoController().save(new Equipamento().setAno(
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_AR_CONDICIONADO).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_AR_CONDICIONADO))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_AR_OFF, MAX_AR_OFF))).setValorSensorReferencia(randomInRange(MIN_AR_OFF, MAX_AR_OFF)));
+                    //.setStatusEquipamento(getStatusArcondicionado(randomInRange(MIN_AR_OFF, MAX_AR_OFF)))
+                    .setStatusEquipamento(new Byte("0"))
+                    .setValorSensorReferencia(randomInRange(MIN_AR_OFF, MAX_AR_OFF)));
             //Ar condicionado  Ligado
              new EquipamentoController().save(new Equipamento().setAno(
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_AR_CONDICIONADO).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_AR_CONDICIONADO))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_AR_ON, MAX_AR_ON))).setValorSensorReferencia(randomInRange(MIN_AR_ON, MAX_AR_ON)));
+                    //.setStatusEquipamento(getStatusArcondicionado(randomInRange(MIN_AR_ON, MAX_AR_ON)))
+                      .setStatusEquipamento(new Byte("1"))
+                     .setValorSensorReferencia(randomInRange(MIN_AR_ON, MAX_AR_ON)));
              
               //Umidificador desligado
             new EquipamentoController().save(new Equipamento().setAno(
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_UMIDIFICADOR).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_UMIDIFICADOR))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_UMI_OFF, MAX_UMI_OFF))).setValorSensorReferencia(randomInRange(MIN_UMI_OFF, MAX_UMI_OFF)));
+                    //.setStatusEquipamento(getStatusUmidificador(randomInRange(MIN_UMI_OFF, MAX_UMI_OFF)))
+                    .setStatusEquipamento(new Byte("0"))
+                    .setValorSensorReferencia(randomInRange(MIN_UMI_OFF, MAX_UMI_OFF)));
             //Umidificador  Ligado
              new EquipamentoController().save(new Equipamento().setAno(
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_UMIDIFICADOR).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_UMIDIFICADOR))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_UMI_ON, MAX_UMI_ON))).setValorSensorReferencia(randomInRange(MIN_UMI_ON, MAX_UMI_ON)));
+                    //.setStatusEquipamento(getStatusUmidificador(randomInRange(MIN_UMI_ON, MAX_UMI_ON)))
+                     .setStatusEquipamento(new Byte("1"))
+                     .setValorSensorReferencia(randomInRange(MIN_UMI_ON, MAX_UMI_ON)));
              
              
                //Iluminacao desligado
@@ -173,13 +183,17 @@ public class GeradorDeAmostras {
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_ILUMINACAO).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_ILUMINACAO))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_ILU_OFF, MAX_ILU_OFF))).setValorSensorReferencia(randomInRange(MIN_ILU_OFF, MAX_ILU_OFF)));
+                    //.setStatusEquipamento(getStatusIluminacao(randomInRange(MIN_ILU_OFF, MAX_ILU_OFF)))
+                    .setStatusEquipamento(new Byte("0"))
+                    .setValorSensorReferencia(randomInRange(MIN_ILU_OFF, MAX_ILU_OFF)));
             //Iluminacao  Ligado
              new EquipamentoController().save(new Equipamento().setAno(
                     DataAtual.getAno()).setDataAmostra(Calendar.getInstance().getTime()).setDia(DataAtual.getDia())
                     .setHora(DataAtual.getHora()).setIdEquipamento(IdEquipamento.ID_ILUMINACAO).setMes(DataAtual.getMes())
                     .setMinuto(DataAtual.getMinuto()).setNomeEquipamento(getNomeEquipamento(IdEquipamento.ID_ILUMINACAO))
-                    .setStatusEquipamento(getStatusAquecedor(randomInRange(MIN_ILU_ON, MAX_ILU_ON))).setValorSensorReferencia(randomInRange(MIN_ILU_ON, MAX_ILU_ON)));
+                    //.setStatusEquipamento(getStatusIluminacao(randomInRange(MIN_ILU_ON, MAX_ILU_ON)))
+                     .setStatusEquipamento(new Byte("1"))
+                     .setValorSensorReferencia(randomInRange(MIN_ILU_ON, MAX_ILU_ON)));
 
            
         }
@@ -200,7 +214,7 @@ public class GeradorDeAmostras {
                 .setHora(sensor.getHora()).setIdEquipamento(sensor.getIdEquipamento()).setMes(sensor.getMes())
                 .setMinuto(sensor.getMin()).setNomeEquipamento(getNomeEquipamento(sensor.getIdEquipamento()))
                 .setStatusEquipamento(getStatusEquipamento(sensor.getIdEquipamento(), getValorSensor(sensor, sensor.getIdEquipamento())))
-                .setValorSensorReferencia(getValorSensor(sensor, sensor.getIdEquipamento()));
+                .setValorSensorReferencia((int)getValorSensor(sensor, sensor.getIdEquipamento()));
     }
 
     private Sensor getSensor(double idEquipamento, int onOff) {
@@ -256,19 +270,34 @@ public class GeradorDeAmostras {
     }
 
     private byte getStatusAquecedor(double temperatura) {
-        return (byte) (temperatura < 21 ? 1 : 0);
+        //return (byte) (temperatura < 21 ? 1 : 0);
+        //return (byte) (temperatura < 21 ? 1 : 0);
+        return (byte) (temperatura <= MAX_AQ_ON ? 1 : 0);
     }
 
     private byte getStatusArcondicionado(double temperatura) {
-        return (byte) (temperatura < 22 ? 0 : 1);
+        //return (byte) (temperatura < 22 ? 0 : 1);
+       // return (byte) (temperatura < 26 ? 0 : 1);
+        return (byte) (temperatura >= MIN_AR_ON ? 1 : 0);
     }
 
     private byte getStatusIluminacao(double luminosidade) {
-        return (byte) (luminosidade < 56 ? 1 : 0);
+        //return (byte) (luminosidade < 56 ? 1 : 0);
+        return (byte) (luminosidade <= MAX_ILU_ON ? 1 : 0);
     }
 
     private byte getStatusUmidificador(double umidade) {
-        return (byte) (umidade <= 55 ? 1 : 0);
+        //return (byte) (umidade <= 55 ? 1 : 0);
+        return (byte) (umidade <= MAX_ILU_ON ? 1 : 0);
+    }
+    
+    
+    private byte getStatusGenerico(double umidade, Status status){
+        if(umidade < status.maxOff && umidade > status.minOff){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
     private String getNomeEquipamento(double idEquipamento) {
@@ -284,6 +313,18 @@ public class GeradorDeAmostras {
             return "UMIDIFICADOR";
         }
         return "";
+    }
+    
+     class Status{
+       public double minOn,maxOn, minOff, maxOff;
+
+        public Status(double minOn, double maxOn, double minOff, double maxOff) {
+            this.minOn = minOn;
+            this.maxOn = maxOn;
+            this.minOff = minOff;
+            this.maxOff = maxOff;
+        }
+       
     }
 
 }

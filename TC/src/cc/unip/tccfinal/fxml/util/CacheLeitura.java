@@ -70,7 +70,7 @@ public class CacheLeitura {
             Equipamento arCondicionado = new Equipamento()
                     .setIdEquipamento(IdEquipamento.ID_AR_CONDICIONADO)
                     .setStatusEquipamento(sensor.getStatusArcondicionado())
-                    .setValorSensorReferencia(sensor.getTemperatura())
+                    .setValorSensorReferencia((int)sensor.getTemperatura())
                     .setNomeEquipamento("ARCONDICIONADO")
                     //.setAnoAmostra(ano)
                     //.setDiaAno(diaAno)
@@ -91,7 +91,7 @@ public class CacheLeitura {
             Equipamento aquecedor = new Equipamento()
                     .setIdEquipamento(IdEquipamento.ID_AQUECEDOR)
                     .setStatusEquipamento(sensor.getStatusAquecedor())
-                    .setValorSensorReferencia(sensor.getTemperatura())
+                    .setValorSensorReferencia((int)sensor.getTemperatura())
                     .setNomeEquipamento("AQUECEDOR")
                     //.setAnoAmostra(ano)
                     // .setDiaAno(diaAno)
@@ -112,7 +112,7 @@ public class CacheLeitura {
             Equipamento umidificador = new Equipamento()
                     .setIdEquipamento(IdEquipamento.ID_UMIDIFICADOR)
                     .setStatusEquipamento(sensor.getStatusUmidificador())
-                    .setValorSensorReferencia(sensor.getUmidade())
+                    .setValorSensorReferencia((int)sensor.getUmidade())
                     .setNomeEquipamento("UMIDIFICADOS")
                     // .setAnoAmostra(ano)
                     //  .setDiaAno(diaAno)
@@ -133,7 +133,7 @@ public class CacheLeitura {
             Equipamento iluminacao = new Equipamento()
                     .setIdEquipamento(IdEquipamento.ID_ILUMINACAO)
                     .setStatusEquipamento(sensor.getStatusIluminacao())
-                    .setValorSensorReferencia(sensor.getLuminosidade())
+                    .setValorSensorReferencia((int)sensor.getLuminosidade())
                     .setNomeEquipamento("ILUMINACAO")
                     // .setAnoAmostra(ano)
                     //  .setDiaAno(diaAno)
@@ -239,7 +239,7 @@ public class CacheLeitura {
 
         e.setIdEquipamento(idEquipamento);
         e.setStatusEquipamento((byte) getStatusEquipamento(idEquipamento, sensor));
-        e.setValorSensorReferencia(getSensorReferencia(idEquipamento, sensor));
+        e.setValorSensorReferencia((int)getSensorReferencia(idEquipamento, sensor));
         e.setNomeEquipamento(getNomeEquipamento(idEquipamento));
         controller.save(e);
     }

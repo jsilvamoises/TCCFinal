@@ -24,6 +24,8 @@ public class Equipamento implements Serializable {
 
     //@EmbeddedId
     //private EquipamentoId id;
+    
+    
 
     @Id
     @GeneratedValue
@@ -32,6 +34,7 @@ public class Equipamento implements Serializable {
     private Date dataAmostra;
     private double idEquipamento;
     private byte statusEquipamento;
+    //@Column(precision = 3)
     private double valorSensorReferencia;
     
     private int ano;
@@ -41,13 +44,7 @@ public class Equipamento implements Serializable {
     private int hora;
     private int minuto;
 
-//    private int anoAmostra;
-//    private int diaAno;
-//    private byte mesAmostra;
-//    private byte diaAmostra;
-//    private byte diaSemana;
-//    private byte horaAmostra1;
-//    private byte minutoAmostra1;
+
     
     private String nomeEquipamento;
 
@@ -59,82 +56,12 @@ public class Equipamento implements Serializable {
         this.nomeEquipamento = nomeEquipamento;
         return this;
     }
-/*
-    public int getAnoAmostra() {
-        return anoAmostra;
-    }
 
-    public Equipamento setAnoAmostra(int anoAmostra) {
-        this.anoAmostra = anoAmostra;
-        return this;
-    }
-
-    public int getDiaAno() {
-        return diaAno;
-    }
-
-    public Equipamento setDiaAno(int diaAno) {
-        this.diaAno = diaAno;
-        return this;
-    }
-
-    public byte getMesAmostra() {
-        return mesAmostra;
-    }
-
-    public Equipamento setMesAmostra(byte mesAmostra) {
-        this.mesAmostra = mesAmostra;
-        return this;
-    }
-
-    public byte getDiaAmostra() {
-        return diaAmostra;
-    }
-
-    public Equipamento setDiaAmostra(byte diaAmostra) {
-        this.diaAmostra = diaAmostra;
-        return this;
-    }
-
-    public byte getDiaSemana() {
-        return diaSemana;
-    }
-
-    public Equipamento setDiaSemana(byte diaSemana) {
-        this.diaSemana = diaSemana;
-        return this;
-    }
-
-    public byte getHoraAmostra1() {
-        return horaAmostra1;
-    }
-
-    public Equipamento setHoraAmostra1(byte horaAmostra1) {
-        this.horaAmostra1 = horaAmostra1;
-        return this;
-    }
-
-    public byte getMinutoAmostra1() {
-        return minutoAmostra1;
-    }
-
-    public Equipamento setMinutoAmostra1(byte minutoAmostra1) {
-        this.minutoAmostra1 = minutoAmostra1;
-        return this;
-    }
-*/
     public Equipamento() {
         // id = new EquipamentoId();
     }
 
-//    public EquipamentoId getId() {
-//        return id;
-//    }
-//
-//    public Equipamento setId(EquipamentoId id) {
-//        this.id = id;
-//        return this;
-//    }
+
     public Date getDataAmostra() {
         return dataAmostra;
     }
