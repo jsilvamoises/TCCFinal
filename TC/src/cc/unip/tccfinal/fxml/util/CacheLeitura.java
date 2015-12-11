@@ -27,19 +27,18 @@ public class CacheLeitura {
     private Sensor ultimoDadoRecebidoSensor;
     private StatusEquipamento ultimoEstadoEquipamento;
     private static CacheLeitura instance;
-    private EquipamentoController controller;
+    private final EquipamentoController controller;
 
     public static CacheLeitura getInstance() {
         return instance == null ? instance = new CacheLeitura() : instance;
     }
 
     private CacheLeitura() {
-        this.ultimoEstadoEquipamento = new StatusEquipamento();
-        //this.ultimoDadoRecebidoSensor = new Sensor();
+        this.ultimoEstadoEquipamento = new StatusEquipamento();        
         this.controller = new EquipamentoController();
     }
 
-    @Deprecated
+   
     public void processar(Sensor sensor) {
         sensor.setHoraAmostra(Calendar.getInstance().getTime());
         dados.add(0, sensor);//Adiciona o dado a primeira posição
@@ -72,83 +71,32 @@ public class CacheLeitura {
                     .setStatusEquipamento(sensor.getStatusArcondicionado())
                     .setValorSensorReferencia((int)sensor.getTemperatura())
                     .setNomeEquipamento("ARCONDICIONADO")
-                    //.setAnoAmostra(ano)
-                    //.setDiaAno(diaAno)
-                    //.setMesAmostra(mes)
-                    // .setDiaAmostra(diaMes)
-                    //.setDiaSemana(diaSemana)
-                    // .setHoraAmostra1(hora)
-                    // .setMinutoAmostra1(minuto)
+                    .setDataAmostra(new Date());                  
 
-                    .setDataAmostra(new Date());
-                    //                    .setId(new EquipamentoId()
-            //                            .setIdEquipamento(IdEquipamento.ID_AR_CONDICIONADO)
-            //                            .setStatusEquipamento(sensor.getStatusArcondicionado())
-            //                            .setValorSensorReferencia(sensor.getTemperatura())
-            //                    ).
-
-            //SALVA O REGISTRO DO AQUECEDOR NO BANCO
+            
             Equipamento aquecedor = new Equipamento()
                     .setIdEquipamento(IdEquipamento.ID_AQUECEDOR)
                     .setStatusEquipamento(sensor.getStatusAquecedor())
                     .setValorSensorReferencia((int)sensor.getTemperatura())
-                    .setNomeEquipamento("AQUECEDOR")
-                    //.setAnoAmostra(ano)
-                    // .setDiaAno(diaAno)
-                    // .setMesAmostra(mes)
-                    // .setDiaAmostra(diaMes)
-                    //  .setDiaSemana(diaSemana)
-                    //  .setHoraAmostra1(hora)
-                    //  .setMinutoAmostra1(minuto)
-
+                    .setNomeEquipamento("AQUECEDOR") 
                     .setDataAmostra(new Date());
-//                    .setId(new EquipamentoId()
-//                            .setIdEquipamento(IdEquipamento.ID_AQUECEDOR)
-//                            .setStatusEquipamento(sensor.getStatusAquecedor())
-//                            .setValorSensorReferencia(sensor.getTemperatura())
-//                    ).setDataAmostra(new Date());
-            //SALVA O REGISTRO DO UMIDIFICADOR NO BANCO
+
 
             Equipamento umidificador = new Equipamento()
                     .setIdEquipamento(IdEquipamento.ID_UMIDIFICADOR)
                     .setStatusEquipamento(sensor.getStatusUmidificador())
                     .setValorSensorReferencia((int)sensor.getUmidade())
-                    .setNomeEquipamento("UMIDIFICADOS")
-                    // .setAnoAmostra(ano)
-                    //  .setDiaAno(diaAno)
-                    //  .setMesAmostra(mes)
-                    //  .setDiaAmostra(diaMes)
-                    //  .setDiaSemana(diaSemana)
-                    //  .setHoraAmostra1(hora)
-                    //  .setMinutoAmostra1(minuto)
-
+                    .setNomeEquipamento("UMIDIFICADOS") 
                     .setDataAmostra(new Date());
 
-//                    .setId(new EquipamentoId()
-            //                            .setIdEquipamento(IdEquipamento.ID_UMIDIFICADOR)
-            //                            .setStatusEquipamento(sensor.getStatusUmidificador())
-            //                            .setValorSensorReferencia(sensor.getUmidade())
-            //                    ).setDataAmostra(new Date());
-            //SALVA O REGISTRO DA ILUMINAÇÃO NO BANCO
+
             Equipamento iluminacao = new Equipamento()
                     .setIdEquipamento(IdEquipamento.ID_ILUMINACAO)
                     .setStatusEquipamento(sensor.getStatusIluminacao())
                     .setValorSensorReferencia((int)sensor.getLuminosidade())
-                    .setNomeEquipamento("ILUMINACAO")
-                    // .setAnoAmostra(ano)
-                    //  .setDiaAno(diaAno)
-                    // .setMesAmostra(mes)
-                    //  .setDiaAmostra(diaMes)
-                    //  .setDiaSemana(diaSemana)
-                    //  .setHoraAmostra1(hora)
-                    //  .setMinutoAmostra1(minuto)
+                    .setNomeEquipamento("ILUMINACAO")                   
                     .setDataAmostra(new Date());
 
-//                    .setId(new EquipamentoId()
-            //                            .setIdEquipamento(IdEquipamento.ID_ILUMINACAO)
-            //                            .setStatusEquipamento(sensor.getStatusIluminacao())
-            //                            .setValorSensorReferencia(sensor.getLuminosidade())
-            //                    ).setDataAmostra(new Date());
             //SALVA TODOS NO BANCO DE DADOS
             controller.saveAll(iluminacao, arCondicionado, aquecedor, umidificador);
         }
@@ -217,14 +165,8 @@ public class CacheLeitura {
             salvarDado(IdEquipamento.ID_UMIDIFICADOR, sensor);
         }
     }
-    /*
-     .setIdEquipamento(IdEquipamento.ID_ILUMINACAO)
-     .setStatusEquipamento(sensor.getStatusIluminacao())
-     .setValorSensorReferencia(sensor.getLuminosidade())
-     .setNomeEquipamento("ILUMINACAO")
-    
-     */
-
+  
+    /* SALVA NO BANCO */
     private void salvarDado(double idEquipamento, Sensor sensor) {
         Equipamento e = new Equipamento();
 
@@ -243,7 +185,7 @@ public class CacheLeitura {
         e.setNomeEquipamento(getNomeEquipamento(idEquipamento));
         controller.save(e);
     }
-
+    /* RETORNA O STATUS DO EQUIPAMENTO */
     private int getStatusEquipamento(double idEquipamento, Sensor sensor) {
         if (idEquipamento == IdEquipamento.ID_AQUECEDOR) {
             return sensor.getStatusAquecedor();
@@ -257,7 +199,7 @@ public class CacheLeitura {
 
         return 0;
     }
-
+    /* RETORNA O SENSOR DE REFERENCIA DO EQUIPAMENTO */
     private double getSensorReferencia(double idEquipamento, Sensor sensor) {
         if (idEquipamento == IdEquipamento.ID_AQUECEDOR) {
             return sensor.getTemperatura();
@@ -271,7 +213,7 @@ public class CacheLeitura {
 
         return 0;
     }
-
+    /* RETORNO O NOME DO EQUIPAMENTO*/
     private String getNomeEquipamento(double idEquipamento) {
         if (idEquipamento == IdEquipamento.ID_AQUECEDOR) {
             return "AQUECEDOR";

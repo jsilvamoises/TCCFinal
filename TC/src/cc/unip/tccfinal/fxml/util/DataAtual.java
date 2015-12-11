@@ -10,6 +10,7 @@ import java.util.Calendar;
 /**
  *
  * @author Moises
+ * Retorna data atual separada
  */
 public class DataAtual {
     

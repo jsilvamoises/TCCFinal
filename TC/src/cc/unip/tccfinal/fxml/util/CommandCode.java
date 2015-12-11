@@ -8,6 +8,7 @@ package cc.unip.tccfinal.fxml.util;
 /**
  *
  * @author Moisés
+ * Codigo de comando para ligar desligar equipamentos
  */
 public class CommandCode {
     public static final int LIGAR_ILUMINACAO = 101;

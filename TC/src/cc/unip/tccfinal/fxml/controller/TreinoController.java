@@ -6,10 +6,10 @@
 package cc.unip.tccfinal.fxml.controller;
 
 //import cc.unip.tccfinal.controller.view.treino.DadosGraficoErrAce;
-import cc.unip.tccfinal.fxml.auxiliar.DadosGraficoBarras;
 import cc.unip.tccfinal.fxml.main.Menu;
 import cc.unip.tccfinal.fxml.model.DadosGraficoErrAce;
 import cc.unip.tccfinal.fxml.rede.InterfaceTreinoRede;
+import cc.unip.tccfinal.fxml.rede.RMLP;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -185,6 +184,7 @@ public class TreinoController implements Initializable {
                 aprenderComErro = newValue;
             }
         });
+        cbAprenderComErros.setVisible(false);
         setDefaultValues();//Aplica valores padrão para o slider
         configSlider(sliderErroMinimo, sliderFatorAdaptacao, sliderNeuroniosEntrada, sliderNeuroniosSegundaCamada, sliderNumeroMaximoEpoca, sliderPorcentagemAmostra);
     }
@@ -195,10 +195,10 @@ public class TreinoController implements Initializable {
     private void setDefaultValues() {
         erroMinimo = 0.03;
         fatorAdaptacao = 0.3;
-        qtdNeuroniosEntrada = 4;
+        qtdNeuroniosEntrada = 3;
         qtdNeuroniosSegundaCamada = 3;
         numeroMaximoEpocas = 100000;
-        qtdPorcentagemAmostra = 30;
+        qtdPorcentagemAmostra = 70;
         updateValoresSlider();
     }
 
@@ -299,16 +299,19 @@ public class TreinoController implements Initializable {
     
     private void gerarGraficoBarras(){
         barChart.getData().clear();
-        for(DadosGraficoBarras dgb:iTreino.getDadosGraficoBarras()){
+      //  for(DadosGraficoBarras dgb:iTreino.getDadosGraficoBarras()){
            
            
             XYChart.Series series = new XYChart.Series();
-            series.setName("Laço "+dgb.getLaco());
+            //series.setName("Laço "+dgb.getLaco());
+            series.setName("Épocas");
            
-            series.getData().add(new XYChart.Data<>("Acertos [ "+dgb.getAcerto()+" ]", dgb.getAcerto()));
-            series.getData().add(new XYChart.Data<>("Erros [ "+dgb.getErro()+" ]", dgb.getErro()));            
+           // series.getData().add(new XYChart.Data<>("Acertos [ "+dgb.getAcerto()+" ]", dgb.getAcerto()));
+          //  series.getData().add(new XYChart.Data<>("Erros [ "+dgb.getErro()+" ]", dgb.getErro()));   
+            series.getData().add(new XYChart.Data<>("Num. Max. Épocas "+RMLP.numeroMaximoEpocas, RMLP.numeroMaximoEpocas));
+            series.getData().add(new XYChart.Data<>("Épocas "+RMLP.epocas, RMLP.epocas));
             barChart.getData().add(series);
-        }
+      //  }
         atualizarSliderComDadosDoTreino();       
         
     }

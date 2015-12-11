@@ -56,9 +56,9 @@ public class EquipamentoController {
         Query query;
         List<Object[]> objetos = new ArrayList<>();
         try {
-            query = session.createQuery("SELECT DISTINCT CONCAT(E.id.idEquipamento, E.id.valorSensorReferencia ,E.id.statusEquipamento) AS Chave, E.id.idEquipamento, E.id.valorSensorReferencia/100 ,E.id.statusEquipamento FROM Equipamento E");
+            query = session.createQuery("SELECT DISTINCT CONCAT(E.id.idEquipamento, E.id.valorSensorReferencia ,E.id.statusEquipamento) AS Chave, E.id.idEquipamento, E.id.valorSensorReferencia/100 ,E.id.statusEquipamento FROM Equipamento E ORDER BY E.id DESC");
             System.out.println(query.list().size());
-            return query.list();
+            return query.setMaxResults(4000).list();
             
         } catch (Exception e) {
             System.out.println(e);

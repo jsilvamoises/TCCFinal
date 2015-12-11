@@ -12,13 +12,13 @@ public class Camada {
         this.neuronios = new Neuronio[nrNeuronios];
         this.inicializarNeuronios(nrConexoesEntrada);
     }
-
+    /*INICIALIZA NEURÔNIO COM NUMERO DE CAMADAS*/
     protected void inicializarNeuronios(Integer nrConexoesEntrada) {
         for (int i = 0; i < neuronios.length; i++) {
             neuronios[i] = new Neuronio(nrConexoesEntrada);
         }
     }
-
+    /* PROPAGA OS SINAIS */
     public Double[] propagarSinais(Double entradas[]) {
         Double saidas[] = new Double[neuronios.length];
         for (int i = 0; i < neuronios.length; i++) {
@@ -26,7 +26,7 @@ public class Camada {
         }
         return saidas;
     }
-
+    /* RETROPROPA SINAIS */
     public void retropropagarErro(TreinoVO treinoVO) {
         for (int i = 0; i < neuronios.length; i++) {
             for (int j = 0; j < neuronios[i].conexoes.length; j++) {

@@ -14,15 +14,12 @@ import com.google.gson.Gson;
  * @author MOISES
  */
 public class GSONConverter {
-
+    /* TIPO DE OBJETO*/
     public enum ObjectType {
-
         SENSOR,
         STATUS_EQUIPAMENTO
     }
-    private Sensor sensor;
-   
-
+    private Sensor sensor; 
     private static GSONConverter instance;
 
     private GSONConverter() {
@@ -39,7 +36,6 @@ public class GSONConverter {
 
     public void transformToObject(String valor, ObjectType tipo) {
         Gson gsom = new Gson();
-
         try {
 
             switch (tipo) {
@@ -63,10 +59,7 @@ public class GSONConverter {
             despachar(sensor);
         }
          
-//        if (sensor != null ) {
-//            sensor.setStatusEquipamentos(statusEquipamento);
-//            despachar(sensor, statusEquipamento);
-//        }
+
 
     }
 

@@ -185,15 +185,32 @@ public class MonitorController implements Initializable {
         ControllerEnumIdEquipamentos controller = new ControllerEnumIdEquipamentos();
         
         for (EnumEquipamentos id : controller.getIds()) {
-            options.add(id.getValor());
-            System.out.println(id.name());
+            options.add(id.getValor()+getNomeEquipamentoPorId(id.getValor()));
+            
         }
         
         options.sorted();
         cbEquipamento.setItems(options);
         cbEquipamento.valueProperty().addListener((ObservableValue<? extends Object> observable, Object oldValue, Object newValue) -> {
-            idEquipamento = (double) newValue;
+            idEquipamento = (double) Double.parseDouble(newValue.toString().substring(0, 3));
         });
+    }
+     /* 0.1 ILUMINACAO
+     * 0.2 AR CONDICIONADO
+     * 0.3 AQUECEDOR
+     * 0.4 UMIDIFICADOR
+     */
+    public String getNomeEquipamentoPorId(double id){
+        if(id==0.1){
+           return " ILUMINACAO";
+        }else if(id == 0.2){
+            return " AR CONDICIONADO";
+        }else if(id == 0.3){
+            return " AQUECEDOR";
+        }else if(id == 0.4){
+            return " UMIDIFICADOR";
+        }
+        return "";
     }
     /**
      * Cria gauge que irá monitorar o uso de memória.
@@ -306,7 +323,7 @@ public class MonitorController implements Initializable {
                 analizar[2] = (double) 1.0;//
             }
             lblResultado.setText("Res:: " + InterfaceTreinoRede.getInstance().classificar(analizar));
-            System.out.println("Clicou né");
+            
         });
 
         btnTreinar.setOnMouseClicked((MouseEvent event) -> {
