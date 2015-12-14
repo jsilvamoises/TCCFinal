@@ -135,7 +135,7 @@ public class TreinoController implements Initializable {
      #########################################################################*/
 
     private void configSliders() {
-        sliderErroMinimo.setMin(0.03);
+        sliderErroMinimo.setMin(0.01);
         sliderErroMinimo.setMax(1.0);
         sliderErroMinimo.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             erroMinimo = newValue.doubleValue();

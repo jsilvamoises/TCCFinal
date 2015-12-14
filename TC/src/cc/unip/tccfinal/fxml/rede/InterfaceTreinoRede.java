@@ -20,8 +20,8 @@ public class InterfaceTreinoRede {
 
     private static final double BIAS = 1.0;
     private List<Object[]> objetosParaTeste = new ArrayList<>();
-    private double[][] CONJUNTO_TREINAMENTO;
-    private double[] VALORES_ESPERADOS;
+   // private double[][] CONJUNTO_TREINAMENTO;
+   // private double[] VALORES_ESPERADOS;
     private int porcentTreino = 70;
     private int nrNeuroniosPrimeiraCamada = 3;
     private int nrNeuroniosEntrada = 3;
@@ -56,16 +56,16 @@ public class InterfaceTreinoRede {
        ///tr = new DadosRepository();
        //  tr.setPorcentagemParaTreinamento(porcentTreino).build();
         /// tr.processar();
-        CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
-        VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
+       /// CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
+       /// VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
         objetosParaTeste = tr.getObjetos();// Retorna os objetos restantes que não foram para treino
         ///listaTreinoSize = tr.getTamanhoListraTreino();
         ///listaVerificacaoSize = tr.getListaParaTeste().size();*/
 
        
         
-        CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
-        VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
+        ///CONJUNTO_TREINAMENTO = tr.getMATRIZ_DADOS();
+        ///VALORES_ESPERADOS = tr.getRESULTADO_ESPERADO();
         listaTreinoSize = tr.getObjetosParaTreinamento().size();
         listaVerificacaoSize = tr.getObjetos().size();
         return this;

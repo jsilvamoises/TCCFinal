@@ -116,7 +116,7 @@ public class MonitorController implements Initializable {
     private TableColumn<String, Number> tcUmidade;
     @FXML
     private Button btnTreinar;
-    
+
     // ========================================================================
     private boolean estaLendoPorta, estaAutomatico, estaSalvandoNoBanco, estaOnAquecedor, estaOnArcondicionado, estaOnIluminacao, estaOnUmidificado;
     private Arduino arduino;
@@ -138,6 +138,7 @@ public class MonitorController implements Initializable {
 
     private InterfaceTreinoRede itr;
     private static final double BIAS = 1.0;
+
     /**
      * Cria os LCDs de monitoramento de coleta de dados
      */
@@ -177,41 +178,44 @@ public class MonitorController implements Initializable {
         grid.setPrefHeight(300);
         boxDireito.getChildren().add(grid);
     }
+
     /**
      * Inicializa o combobox
      */
     private void inicializarComboBox() {
         ObservableList options = FXCollections.observableArrayList();
         ControllerEnumIdEquipamentos controller = new ControllerEnumIdEquipamentos();
-        
+
         for (EnumEquipamentos id : controller.getIds()) {
-            options.add(id.getValor()+getNomeEquipamentoPorId(id.getValor()));
-            
+            options.add(id.getValor() + getNomeEquipamentoPorId(id.getValor()));
+
         }
-        
+
         options.sorted();
         cbEquipamento.setItems(options);
         cbEquipamento.valueProperty().addListener((ObservableValue<? extends Object> observable, Object oldValue, Object newValue) -> {
             idEquipamento = (double) Double.parseDouble(newValue.toString().substring(0, 3));
         });
     }
-     /* 0.1 ILUMINACAO
+    /* 0.1 ILUMINACAO
      * 0.2 AR CONDICIONADO
      * 0.3 AQUECEDOR
      * 0.4 UMIDIFICADOR
      */
-    public String getNomeEquipamentoPorId(double id){
-        if(id==0.1){
-           return " ILUMINACAO";
-        }else if(id == 0.2){
+
+    public String getNomeEquipamentoPorId(double id) {
+        if (id == 0.1) {
+            return " ILUMINACAO";
+        } else if (id == 0.2) {
             return " AR CONDICIONADO";
-        }else if(id == 0.3){
+        } else if (id == 0.3) {
             return " AQUECEDOR";
-        }else if(id == 0.4){
+        } else if (id == 0.4) {
             return " UMIDIFICADOR";
         }
         return "";
     }
+
     /**
      * Cria gauge que irá monitorar o uso de memória.
      */
@@ -280,6 +284,7 @@ public class MonitorController implements Initializable {
         });
         tbAutomatico.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             estaAutomatico = newValue;
+            iniciarLeituraPorta();
             if (estaAutomatico) {
                 itr = InterfaceTreinoRede.getInstance();
             } else {
@@ -298,11 +303,15 @@ public class MonitorController implements Initializable {
             }
         });
         tbSalvarDados.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            estaSalvandoNoBanco = newValue;
+            //estaSalvandoNoBanco = newValue;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Opção inválida");
+            alert.setContentText("Opção desabilitada!!");
+            alert.showAndWait();
             if (estaSalvandoNoBanco) {
-                arduino.salvarDadosNoBanco();
+                //arduino.salvarDadosNoBanco();
             } else {
-                arduino.naoSalvarDadosNoBanco();
+                //arduino.naoSalvarDadosNoBanco();
             }
         });
         tbUmidificador.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
@@ -323,7 +332,7 @@ public class MonitorController implements Initializable {
                 analizar[2] = (double) 1.0;//
             }
             lblResultado.setText("Res:: " + InterfaceTreinoRede.getInstance().classificar(analizar));
-            
+
         });
 
         btnTreinar.setOnMouseClicked((MouseEvent event) -> {
@@ -338,9 +347,23 @@ public class MonitorController implements Initializable {
         startProcessarAutomatico();// INICIA VERIFICAÇÃO SE É PARA PROCESSAR OS DADOS VINDOS DO SENSOR
         startUpdateTableThread();
     }
+    /* INICIA O PROCESSO DE LEITURA DA PORTA */
+    public void iniciarLeituraPorta() {
+           if(estaLendoPorta==false){
+               estaLendoPorta =true;
+               if (estaLendoPorta) {
+                lerPortasArduino();
+                startUpdateGraficoThread();
+            } else {
+                //arduino.pararDeReceberDados();
+            }
+           }
+    }
+
     /**
      * Altera o background de tooglebutton
-     * @param tb 
+     *
+     * @param tb
      */
     private void setBackGroundToogleButtonsDisabled(ToggleButton... tb) {
         for (ToggleButton t : tb) {
@@ -348,9 +371,11 @@ public class MonitorController implements Initializable {
             t.setText("OFF");
         }
     }
+
     /**
      * Altera o background de tooglebutton
-     * @param tb 
+     *
+     * @param tb
      */
     private void setBackGroundToogleButtonsEnabled(ToggleButton... tb) {
         for (ToggleButton t : tb) {
@@ -370,10 +395,13 @@ public class MonitorController implements Initializable {
             });
         }
     }
+
     // -------------------------------------------------------------------------
+
     /**
      * Inicia o processo de leitura de portas que o arduino está enviado dados
-     * @return 
+     *
+     * @return
      */
     private boolean lerPortasArduino() {
 
@@ -398,7 +426,9 @@ public class MonitorController implements Initializable {
         }
 
     }
+
     // -------------------------------------------------------------------------
+
     /**
      * Inicia a thread que irá atualizar a interfaçe como os dados do gráfico
      */
@@ -416,7 +446,9 @@ public class MonitorController implements Initializable {
         };
         new Timer().scheduleAtFixedRate(update, 0, 1000);
     }
+
     // -------------------------------------------------------------------------
+
     /**
      * Gera o gráfico com os utimos dados coletados
      */
@@ -459,7 +491,9 @@ public class MonitorController implements Initializable {
 
         }
     }
+
     // -------------------------------------------------------------------------
+
     /**
      * Inicia a thread que irá ficar analisando se precisa alterar a cor dos bo
      * tões
@@ -480,9 +514,11 @@ public class MonitorController implements Initializable {
         };
         new Timer().scheduleAtFixedRate(update, 0, 1000);
     }
+
     // -------------------------------------------------------------------------
+
     /**
-     * Altera a cor dos botões que estão ativos no momento, 
+     * Altera a cor dos botões que estão ativos no momento,
      */
     private void piscarBotoes() {
         if (estaLendoPorta) {
@@ -535,25 +571,25 @@ public class MonitorController implements Initializable {
     /**
      * Inicia o processamento automático
      */
-    private void processarAutomatico() {        
-        if (estaAutomatico) {            
-                sensor = CacheLeitura.getInstance().getUltimoDadoRecebidoSensor();
-                //Vetor com id dos equipamentos
-                double idSensor[] = {0.1, 0.2, 0.3, 0.4};
-                /*Sequencia dos valores dos sensores que correspodem ao índece
-                do vetor idSensor[]*/
-                double valoresColetados[] = {
-                    sensor.getLuminosidade() / 100, 
-                    sensor.getTemperatura() / 100, 
-                    sensor.getTemperatura() / 100, 
-                    sensor.getUmidade() / 100};
-                
-                for (int i = 0; i < 4; i++) {
-                    double res[] = {idSensor[i], valoresColetados[i], BIAS};
-                    System.out.println(res[0] + "," + res[1] + "," + res[2]);
-                    setEstadoEquipamento(res, i + 1);
-                }
-            
+    private void processarAutomatico() {
+        if (estaAutomatico) {
+            sensor = CacheLeitura.getInstance().getUltimoDadoRecebidoSensor();
+            //Vetor com id dos equipamentos
+            double idSensor[] = {0.1, 0.2, 0.3, 0.4};
+            /*Sequencia dos valores dos sensores que correspodem ao índece
+             do vetor idSensor[]*/
+            double valoresColetados[] = {
+                sensor.getLuminosidade() / 100,
+                sensor.getTemperatura() / 100,
+                sensor.getTemperatura() / 100,
+                sensor.getUmidade() / 100};
+
+            for (int i = 0; i < 4; i++) {
+                double res[] = {idSensor[i], valoresColetados[i], BIAS};
+                System.out.println(res[0] + "," + res[1] + "," + res[2]);
+                setEstadoEquipamento(res, i + 1);
+            }
+
         }
     }
 
@@ -632,11 +668,9 @@ public class MonitorController implements Initializable {
     }
 
     // -------------------------------------------------------------------------
-
     /**
      * Inicia o Thread que ficará atualizando a tabela
      */
-
     private void startUpdateTableThread() {
         configTable();
         TimerTask update = new TimerTask() {
@@ -654,11 +688,9 @@ public class MonitorController implements Initializable {
     }
 
     // -------------------------------------------------------------------------
-
     /**
      * Preenche a tabela com os ultimos dados coletados
      */
-
     private void preencherTabela() {
         //obDados = FXCollections.observableArrayList();
         dados = CacheLeitura.getInstance().getDados();
@@ -683,11 +715,9 @@ public class MonitorController implements Initializable {
     }
 
     // -------------------------------------------------------------------------
-
     /**
      * Congigura as colunas da Tabela
      */
-
     public void configTable() {
         obDados = FXCollections.observableArrayList();
         // ---------------------------------------------------------------------
