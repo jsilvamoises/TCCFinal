@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -96,6 +97,9 @@ public class TreinoController implements Initializable {
     private Label lblNeuroniosSegundaCamada;    
     @FXML
     private  CheckBox cbAprenderComErros;
+    
+    @FXML
+    public static Label lblEpocas;
     
      @FXML
     private Button btnGerarDados;
@@ -251,19 +255,40 @@ public class TreinoController implements Initializable {
 
     private void configToolbar() {
         btnTreinarRede.setOnAction(new EventHandler<ActionEvent>() {
-
+            
             public void handle(ActionEvent event) {
-                iTreino.setErroMinimo(erroMinimo)
+                new Thread(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                        btnTreinarRede.setDisable(true);
+                        iTreino.setErroMinimo(erroMinimo)
                         .setFatorAdaptacao(fatorAdaptacao)
                         .setNrNeuroniosEntrada(qtdNeuroniosEntrada)
                         .setNrNeuroniosPrimeiraCamada(qtdNeuroniosSegundaCamada)            
                         .setNumeroMaximoEpocas(numeroMaximoEpocas)
                         .setPorcentagemTreinamento(qtdPorcentagemAmostra)
                         .treinar();
+                        
+                        Platform.runLater(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                gerarGraficoPizza();
+                                gerarGraficoBarras();
+                                gerarGraficoAmostras();
+                                btnTreinarRede.setDisable(false);
+                            }
+                        });
+                        
+                        
+                    }
+                    
+                     
+                }).start();
                 
-                gerarGraficoPizza();
-                gerarGraficoBarras();
-                gerarGraficoAmostras();
+                
+               
                 //configurarGraficos(pieChart, pieChartAmostras);
             }
         });

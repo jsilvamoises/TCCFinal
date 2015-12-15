@@ -51,7 +51,7 @@ public class CacheLeitura {
 
         //REMOVE ITENS MAIS VELHO DA LISTA
         if (dados.size() > 20) {
-            System.out.println(">>> Removendo o objeto mais antigo da lista [20º]");
+            //System.out.println(">>> Removendo o objeto mais antigo da lista [20º]");
             dados.remove(20);
         }
         //Verifica se é para salvar amostras no banco
@@ -154,7 +154,7 @@ public class CacheLeitura {
 
         //REMOVE ITENS MAIS VELHO DA LISTA
         if (dados.size() > 20) {
-            System.out.println(">>> Removendo o objeto mais antigo da lista [20º]");
+            //System.out.println(">>> Removendo o objeto mais antigo da lista [20º]");
             dados.remove(20);
         }
         //Caso a opção salvar esteja ativa irá salvar no banco

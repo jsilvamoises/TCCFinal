@@ -45,6 +45,7 @@
             <Slider fx:id="sliderNumeroMaximoEpoca" />
             <Separator />
             <Button fx:id="btnRestaurarPadrao" mnemonicParsing="false" text="Restaurar Padrão" />
+            <Label fx:id="lblEpocas" prefHeight="17.0" prefWidth="157.0" text="Época.:" />
          </children>
          <BorderPane.margin>
             <Insets left="10.0" top="10.0" />

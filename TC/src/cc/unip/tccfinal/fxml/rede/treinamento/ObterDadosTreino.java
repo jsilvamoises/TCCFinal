@@ -69,12 +69,12 @@ public class ObterDadosTreino {
         Integer on = 0, off = 0;
 
         double sizeListaMaster = objetos.size();
-        System.out.println("Tamanho da amostragem" + objetos.size());
+        //System.out.println("Tamanho da amostragem" + objetos.size());
         int totalAmostras = (int) Math.round((sizeListaMaster / 100) * porcentagemParaTreinamento);
         if (totalAmostras % 2 != 0) {
             totalAmostras += 1;
         }
-        System.out.println("Sera separado" + totalAmostras + " amostras....");
+        //System.out.println("Sera separado" + totalAmostras + " amostras....");
         Random random = new Random();
         int unidadeAmostra = totalAmostras / listaKey.size();
         /*

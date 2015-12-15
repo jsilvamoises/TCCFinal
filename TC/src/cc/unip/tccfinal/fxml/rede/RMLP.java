@@ -1,6 +1,10 @@
 package cc.unip.tccfinal.fxml.rede;
 
+import cc.unip.tccfinal.fxml.controller.TreinoController;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 
 public class RMLP {
@@ -47,10 +51,13 @@ public class RMLP {
                 aprender(conjuntoTreinamento, entradaSegundaCamada, gradiente, i);
             }
             epocas++;
+            atualizarValorLabelEpocas(epocas);
+            //System.gc();
         }
        
 
     }
+    
     /*#####################################################################
      ##### CLASSIFICA UM VETOR DE DADOS INSERIDOS NA REDE              #####
      #####################################################################*/
@@ -58,14 +65,14 @@ public class RMLP {
     public int classificar(double[] entrada) {
         double y = 0;
         if (epocas > numeroMaximoEpocas) {
-            System.out.println("Nao foi possivel atingir um ponto de convergencia, verifique os parametros e a estrutura da rede.");
+          //  System.out.println("Nao foi possivel atingir um ponto de convergencia, verifique os parametros e a estrutura da rede.");
         } else {
             // System.out.printf("Treinamento realizado em %s epocas. \n", epocas);
             double[] saidasPrimeiraCamada = getSaidaClassificacaoPrimeiraCamada(entrada);
             double[] entradaSegundaCamada = getEntradasSegundaCamada(saidasPrimeiraCamada);
             y = propagarSinalPelaSegundaCamada(entradaSegundaCamada);
-            System.out.println("Saidax: " + y);
-            System.out.println("Saidax: " + Math.round(y));
+           // System.out.println("Saidax: " + y);
+           // System.out.println("Saidax: " + Math.round(y));
         }
         return (int) Math.round(y);
     }
@@ -201,20 +208,20 @@ public class RMLP {
      #####################################################################*/
 
     public void imprimirValoresConexoes() {
-        System.out.println("\n Conexoes da primeira camada:");
+       // System.out.println("\n Conexoes da primeira camada:");
         for (int i = 0; i < conexoesPrimeiraCamada.length; i++) {
             for (int j = 0; j < conexoesPrimeiraCamada[i].length; j++) {
-                System.out.println(conexoesPrimeiraCamada[i][j] + " ");
+               // System.out.println(conexoesPrimeiraCamada[i][j] + " ");
             }
-            System.out.println("\n");
+           // System.out.println("\n");
         }
 
-        System.out.println("\n Conexoes da segunda camada:");
+      //  System.out.println("\n Conexoes da segunda camada:");
         for (int i = 0; i < conexoesSegundaCamada.length; i++) {
-            System.out.println(conexoesSegundaCamada[i] + " ");
+           // System.out.println(conexoesSegundaCamada[i] + " ");
         }
 
-        System.out.println("\n\n");
+      //  System.out.println("\n\n");
     }
     /* RETORNA AS CONEXÕES DA PRIMEIRA CAMADA */
 
@@ -296,6 +303,18 @@ public class RMLP {
         return this;
     }
 
-    
+    private void atualizarValorLabelEpocas(final int x) {
+        TimerTask update = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    
+                   TreinoController.lblEpocas.setText("Epoca.: "+x);
+                  // System.gc();
+                });
+            }
+        };
+        
+    }
 
 }

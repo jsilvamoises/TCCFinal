@@ -5,15 +5,20 @@
  */
 package cc.unip.tccfinal.fxml.controller;
 
-import cc.unip.tccfinal.fxml.model.TableDados;
 import cc.unip.tccfinal.fxml.EnumEquipamentos;
 import cc.unip.tccfinal.fxml.main.Treino;
 import cc.unip.tccfinal.fxml.model.Sensor;
+import cc.unip.tccfinal.fxml.model.TableDados;
 import cc.unip.tccfinal.fxml.rede.InterfaceTreinoRede;
 import cc.unip.tccfinal.fxml.serialport.Arduino;
 import cc.unip.tccfinal.fxml.serialport.JavaSerialPort;
 import cc.unip.tccfinal.fxml.util.CacheLeitura;
 import cc.unip.tccfinal.fxml.util.CommandCode;
+import cc.unip.tccfinal.fxml.util.HibernateUtil;
+import cc.unip.tccfinal.fxml.util.IBackGround;
+import cc.unip.tccfinal.fxml.util.SystemInfo;
+import eu.hansolo.enzo.gauge.OneEightyGauge;
+import eu.hansolo.enzo.gauge.OneEightyGaugeBuilder;
 import eu.hansolo.enzo.lcd.Lcd;
 import eu.hansolo.enzo.lcd.LcdBuilder;
 import java.net.URL;
@@ -24,8 +29,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
@@ -33,31 +41,25 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import cc.unip.tccfinal.fxml.util.IBackGround;
-import cc.unip.tccfinal.fxml.util.SystemInfo;
-import eu.hansolo.enzo.gauge.OneEightyGauge;
-import eu.hansolo.enzo.gauge.OneEightyGaugeBuilder;
-import javafx.animation.AnimationTimer;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Stop;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 
 /**
  * FXML Controller class
@@ -283,12 +285,12 @@ public class MonitorController implements Initializable {
             }
         });
         tbAutomatico.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+          // estaAutomatico = newValue;
             estaAutomatico = newValue;
-            iniciarLeituraPorta();
             if (estaAutomatico) {
                 itr = InterfaceTreinoRede.getInstance();
             } else {
-
+                 
             }
         });
         tbIluminacao.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
@@ -346,6 +348,21 @@ public class MonitorController implements Initializable {
         criarGaugeMemoria();
         startProcessarAutomatico();// INICIA VERIFICAÇÃO SE É PARA PROCESSAR OS DADOS VINDOS DO SENSOR
         startUpdateTableThread();
+        
+        iniciarDatabase();
+    }
+    
+    
+    private void iniciarDatabase(){
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+                session.getTransaction().begin();
+                session.getTransaction().commit();
+            }
+        }).start();
     }
     /* INICIA O PROCESSO DE LEITURA DA PORTA */
     public void iniciarLeituraPorta() {
@@ -503,6 +520,7 @@ public class MonitorController implements Initializable {
             @Override
             public void run() {
                 Platform.runLater(() -> {
+                    
                     piscarBotoes();
                     if (backDefaut.equals(IBackGround.BACKGROUND_RED)) {
                         backDefaut = IBackGround.BACKGROUND_DARKCIAN;
@@ -586,7 +604,7 @@ public class MonitorController implements Initializable {
 
             for (int i = 0; i < 4; i++) {
                 double res[] = {idSensor[i], valoresColetados[i], BIAS};
-                System.out.println(res[0] + "," + res[1] + "," + res[2]);
+               //******* System.out.println(res[0] + "," + res[1] + "," + res[2]);
                 setEstadoEquipamento(res, i + 1);
             }
 

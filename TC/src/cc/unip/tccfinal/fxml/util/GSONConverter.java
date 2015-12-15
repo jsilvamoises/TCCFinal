@@ -40,8 +40,8 @@ public class GSONConverter {
 
             switch (tipo) {
                 case SENSOR:
-                    System.out.println(">> Convertendo JSON para Ojeto Java [ SENSOR ]");
-                    System.out.println(valor);
+                   // System.out.println(">> Convertendo JSON para Ojeto Java [ SENSOR ]");
+                   // System.out.println(valor);
                     try {
                         sensor = gsom.fromJson(valor, Sensor.class);
                     } catch (Exception e) {

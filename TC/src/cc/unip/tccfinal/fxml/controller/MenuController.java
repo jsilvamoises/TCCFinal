@@ -62,6 +62,9 @@ public class MenuController implements Initializable {
 
                 @Override
                 public void run() {
+                    if(tfTotal.getText().isEmpty()){
+                        tfTotal.setText("1000");
+                    }
                     new GeradorDeAmostras(Integer.parseInt(tfTotal.getText()), progressBar).gerarAmostras();
                 }
             }).start();
